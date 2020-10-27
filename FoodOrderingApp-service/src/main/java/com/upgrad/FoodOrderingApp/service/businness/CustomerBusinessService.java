@@ -66,7 +66,7 @@ public class CustomerBusinessService {
 
     private void validateEmail(String email) throws SignUpRestrictedException {
         Pattern VALID_EMAIL_REGEX =
-                Pattern.compile("^[A-Z0-9._%+-]+[A-Z0-9.-]+\\.[A-Z]{2,6}}$", Pattern.CASE_INSENSITIVE);
+                Pattern.compile("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_REGEX.matcher(email);
         if (matcher.find() == false) {
             throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
