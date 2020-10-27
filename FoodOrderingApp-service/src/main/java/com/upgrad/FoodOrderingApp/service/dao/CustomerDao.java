@@ -26,4 +26,21 @@ public class CustomerDao {
             return null;
         }
     }
+    public CustomerEntity checkUUID(final String uuid){
+        try{
+            return entityManager.createNamedQuery("userByUUID", CustomerEntity.class).setParameter("uuid", uuid)
+                    .getSingleResult();
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    public CustomerEntity getCustomerByEmail(String email){
+        try{
+            return entityManager.createNamedQuery("userByEmail", CustomerEntity.class).setParameter("email", email)
+                    .getSingleResult();
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
 }
