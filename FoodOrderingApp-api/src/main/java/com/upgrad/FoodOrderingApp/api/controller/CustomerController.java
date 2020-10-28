@@ -1,10 +1,7 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.businness.CustomerBusinessService;
-import com.upgrad.FoodOrderingApp.service.businness.LoginBusinessService;
-import com.upgrad.FoodOrderingApp.service.businness.LogoutBusinessService;
-import com.upgrad.FoodOrderingApp.service.businness.UpdatedCustomerBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.*;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
@@ -18,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -27,7 +23,7 @@ import java.util.UUID;
 @CrossOrigin
 public class CustomerController {
     @Autowired
-    CustomerBusinessService customerBusinessService;
+    CustomerService customerService;
 
     @Autowired
     LoginBusinessService loginBusinessService;
@@ -37,6 +33,9 @@ public class CustomerController {
 
     @Autowired
     UpdatedCustomerBusinessService updatedCustomerBusinessService;
+
+    @Autowired
+    UpdatePasswordBusinessService updatePasswordBusinessService;
 
     /* The method handles Customer SignUp Related request.It takes the details as per in the SignupCustomerRequest
     & produces response in SignupCustomerResponse and returns UUID of newly Created Customer and Success message else Return error code and error Message.
@@ -50,7 +49,7 @@ public class CustomerController {
         customerEntity.setLastname(signupCustomerRequest.getLastName());
         customerEntity.setPassword(signupCustomerRequest.getPassword());
         customerEntity.setContactNumber(signupCustomerRequest.getContactNumber());
-        CustomerEntity createdCustomer = customerBusinessService.signup(customerEntity);
+        CustomerEntity createdCustomer = customerService.signup(customerEntity);
 
         SignupCustomerResponse signupCustomerResponse = new SignupCustomerResponse().id(createdCustomer.getUuid()).status("CUSTOMER SUCCESSFULLY REGISTERED");
         return new ResponseEntity<SignupCustomerResponse>(signupCustomerResponse, HttpStatus.CREATED);
@@ -86,10 +85,10 @@ public class CustomerController {
     /* This method handles the customer details update request. Takes the request as UpdateCustomerRequest and produces UpdateCustomerResponse containing the details of the updated Customer.
     If error returns the error code with corresponding Message.
      */
-    @RequestMapping(method = RequestMethod.POST, path = "/customer", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization, @RequestBody(required = false) UpdateCustomerRequest updateCustomerRequest) throws AuthenticationFailedException, UpdateCustomerException {
+    @RequestMapping(method = RequestMethod.PUT, path = "/customer", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization, @RequestBody(required = false) UpdateCustomerRequest updateCustomerRequest) throws AuthorizationFailedException, UpdateCustomerException {
 
-        String[] authorizationData = authorization.split(" ");
+        String[] authorizationData = authorization.split("Bearer");
         String userAccessToken = authorizationData[0];
         String firstName = updateCustomerRequest.getFirstName();
         String lastName = updateCustomerRequest.getLastName();
@@ -97,5 +96,20 @@ public class CustomerController {
         UpdateCustomerResponse updateCustomerResponse = new UpdateCustomerResponse().id(updateCustomer.getUuid()).firstName(updateCustomer.getFirstname()).lastName(updateCustomer.getLastname())
                 .status("CUSTOMER DETAILS UPDATED SUCCESSFULLY");
         return new ResponseEntity<UpdateCustomerResponse>(updateCustomerResponse, HttpStatus.OK);
+    }
+        /* This method is to updateCustomerPassword the customer using oldPassword,newPassword & customerEntity and return the CustomerEntity .
+     If error throws exception with error code and error message.
+     */
+
+    @RequestMapping(method = RequestMethod.PUT, path = "/customer/password", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String accessToken, @RequestBody(required = false) UpdatePasswordRequest updatePasswordRequest ) throws AuthorizationFailedException, UpdateCustomerException{
+        String[] authorizedData = accessToken.split(" ");
+        String userAccessToken = authorizedData[1];
+        String newPassword = updatePasswordRequest.getNewPassword();
+        String oldPassword = updatePasswordRequest.getOldPassword();
+        CustomerEntity customerEntity = updatePasswordBusinessService.updatedPassword(userAccessToken, newPassword, oldPassword);
+        UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(customerEntity.getUuid())
+                .status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
+        return new ResponseEntity<UpdatePasswordResponse>(updatePasswordResponse, HttpStatus.OK);
     }
 }
