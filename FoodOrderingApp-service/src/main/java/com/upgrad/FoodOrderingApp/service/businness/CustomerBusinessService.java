@@ -3,6 +3,7 @@ package com.upgrad.FoodOrderingApp.service.businness;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
+import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -47,14 +48,14 @@ public class CustomerBusinessService {
                 || customerEntity.getContactNumber() == null
                 || customerEntity.getPassword() == null) {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
-        }
-        else {
+        } else {
             validateEmail(customerEntity.getEmail());
             validateContactNo(customerEntity.getContactNumber());
             validatePassword(customerEntity.getPassword());
         }
         return customerEntity;
     }
+
     private void validatePassword(String password) throws SignUpRestrictedException {
         Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
         Matcher matcher = pattern.matcher(password);
@@ -78,5 +79,4 @@ public class CustomerBusinessService {
             throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
         }
     }
-
 }
