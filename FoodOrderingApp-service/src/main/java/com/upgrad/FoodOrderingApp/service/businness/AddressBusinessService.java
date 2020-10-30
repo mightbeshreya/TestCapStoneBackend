@@ -1,13 +1,16 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.dao.AddressDao;
+import com.upgrad.FoodOrderingApp.service.dao.CustomerAddressDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
 import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
+import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
+import jdk.nashorn.internal.ir.IfNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,6 +27,9 @@ public class AddressBusinessService {
 
     @Autowired
     CustomerDao customerDao; //Handle all data customer
+
+    @Autowired
+    CustomerAddressDao customerAddressDao;
 
     /* This method is to saveAddress.Takes the Address and state entity and saves the Address to the DB.
     If error throws exception with error code and error message.
@@ -64,9 +70,38 @@ public class AddressBusinessService {
         StateEntity stateEntity = addressDao.getState(uuid);
         return stateEntity;
     }
+
     //To save the customer address
-    public CustomerAddressEntity saveCustomerAddress(CustomerAddressEntity customerAddressEntity){
+    public CustomerAddressEntity saveCustomerAddress(CustomerAddressEntity customerAddressEntity) {
 
         return addressDao.save(customerAddressEntity);
+    }
+
+    public String deleteAddress(String addressUuid, String authorization) throws AuthorizationFailedException, AddressNotFoundException {
+
+        //validate user
+        CustomerAuthTokenEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorization);
+        AddressEntity addressEntity = addressDao.getAddressByUuid(addressUuid);
+        CustomerAddressEntity customerAddressEntity = customerAddressDao.getSingleAddress(addressEntity);
+
+        if (customerAuthTokenEntity.equals(null)) {
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        }
+        final ZonedDateTime customerSignOut = customerAuthTokenEntity.getLogoutAt();
+
+        if (customerSignOut != null && customerAuthTokenEntity != null) {
+            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        }
+        final ZonedDateTime customerSessionExpire = customerAuthTokenEntity.getExpiresAt();
+        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.systemDefault());
+        if (customerSessionExpire.compareTo(currentTime) < 0) {
+            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        }
+
+        if (customerAuthTokenEntity.getCustomer().getId().equals(customerAddressEntity.getCustomer().getId())) {
+            return addressDao.deleteAddress(addressUuid);
+        } else {
+            throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
+        }
     }
 }

@@ -52,4 +52,15 @@ public class AddressDao {
         entityManager.persist(customerAddressEntity);
         return customerAddressEntity;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String deleteAddress(String address_uuid){
+try {
+AddressEntity addressEntity = getAddressByUuid(address_uuid);
+entityManager.remove(addressEntity);
+return addressEntity.getUuid();
+}catch (NoResultException nre){
+    return null;
+}
+    }
 }
