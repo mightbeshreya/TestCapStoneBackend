@@ -1,8 +1,11 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
+import com.upgrad.FoodOrderingApp.service.dao.CustomerAddressDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +29,9 @@ public class CustomerService {
 
     @Autowired
     private PasswordCryptographyProvider passwordCryptographyProvider;
+
+    @Autowired
+    CustomerAddressDao customerAddressDao;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity signup(CustomerEntity customerEntity) throws SignUpRestrictedException {
@@ -90,5 +100,32 @@ public class CustomerService {
         else {
             return customerAuth;
         }
+    }
+    //To get Address By Customer
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<CustomerAddressEntity> getAddressByCustomer(final String authorizationToken) throws AuthorizationFailedException {
+
+        CustomerAuthTokenEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
+
+        if (customerAuth.equals(null)) {
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        }
+        final ZonedDateTime customerSignOutTime = customerAuth.getLogoutAt();
+
+        if (customerSignOutTime != null && customerAuth != null) {
+            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        }
+
+        final ZonedDateTime customerSessionExpireTime = customerAuth.getExpiresAt();
+        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.systemDefault());
+        if (customerSessionExpireTime.compareTo(currentTime) < 0) {
+            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        }
+
+        List<CustomerAddressEntity> customerAddressEntity = customerAddressDao.getAddressByCustomer(customerAuth.getCustomer());
+
+
+        return customerAddressEntity;
+
     }
 }
