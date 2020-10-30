@@ -46,6 +46,16 @@ public class CustomerEntity implements Serializable {
     @Size(max = 30)
     private String contactNumber;
 
+    @Column(name = "password")
+    @NotNull
+    @Size(max = 255)
+    private String password;
+
+    @Column(name = "salt")
+    @NotNull
+    @Size(max = 200)
+    private String salt;
+
     public Integer getId() {
         return id;
     }
@@ -110,14 +120,6 @@ public class CustomerEntity implements Serializable {
         this.salt = salt;
     }
 
-    @Column(name = "password")
-    @NotNull
-    @Size(max = 255)
-    private String password;
 
-    @Column(name = "salt")
-    @NotNull
-    @Size(max = 200)
-    private String salt;
 
 }

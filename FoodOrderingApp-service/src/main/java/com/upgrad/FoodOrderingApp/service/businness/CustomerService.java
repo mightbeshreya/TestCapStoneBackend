@@ -1,6 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
@@ -77,6 +78,17 @@ public class CustomerService {
     private void validateContactNo(String contactNumber) throws SignUpRestrictedException {
         if (Pattern.matches("[0-9]{10}", contactNumber) == false) {
             throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
+        }
+    }
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CustomerAuthTokenEntity getCustomer(final String authorizationToken){
+
+        CustomerAuthTokenEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
+        if(customerAuth == null){
+            return null;
+        }
+        else {
+            return customerAuth;
         }
     }
 }
