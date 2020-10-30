@@ -7,12 +7,9 @@
     <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/AddressController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/controller/AddressController.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/controller/AddressController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CustomerAddressEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CustomerAddressEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/AddressBusinessService.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/AddressBusinessService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/CustomerAddressEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/CustomerAddressEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/AddressBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/AddressBusinessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/AddressDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/AddressDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/CustomerAddressDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/CustomerAddressDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +243,7 @@
       <workItem from="1543492206993" duration="13152000" />
       <workItem from="1545232696710" duration="1008000" />
       <workItem from="1603730832877" duration="32834000" />
-      <workItem from="1604067301068" duration="15922000" />
+      <workItem from="1604067301068" duration="18523000" />
     </task>
     <servers />
   </component>
@@ -309,22 +306,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1603732537271" />
-    <state width="1237" height="251" key="GridCell.Tab.0.bottom" timestamp="1604085127602">
+    <state width="1237" height="251" key="GridCell.Tab.0.bottom" timestamp="1604086256546">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="251" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604085127602" />
-    <state width="1237" height="251" key="GridCell.Tab.0.center" timestamp="1604085127602">
+    <state width="1237" height="251" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604086256546" />
+    <state width="1237" height="251" key="GridCell.Tab.0.center" timestamp="1604086256546">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="251" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604085127602" />
-    <state width="1237" height="251" key="GridCell.Tab.0.left" timestamp="1604085127602">
+    <state width="1237" height="251" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604086256546" />
+    <state width="1237" height="251" key="GridCell.Tab.0.left" timestamp="1604086256546">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="251" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604085127602" />
-    <state width="1237" height="251" key="GridCell.Tab.0.right" timestamp="1604085127602">
+    <state width="1237" height="251" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604086256546" />
+    <state width="1237" height="251" key="GridCell.Tab.0.right" timestamp="1604086256546">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="251" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604085127602" />
+    <state width="1237" height="251" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604086256546" />
     <state width="1237" height="237" key="GridCell.Tab.1.bottom" timestamp="1603817049009">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

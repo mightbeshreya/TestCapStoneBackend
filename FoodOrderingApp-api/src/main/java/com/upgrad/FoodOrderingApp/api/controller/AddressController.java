@@ -6,6 +6,7 @@ import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
@@ -83,4 +84,18 @@ AddressListResponse addressListResponse = new AddressListResponse().addAddresses
    }
    return new ResponseEntity<List<AddressListResponse>>(addressListResponses, HttpStatus.OK);
     }
+    /*  The method handles delete  Address  request.It takes the authorization and path variables address UUID
+  & produces response in DeleteAddressResponse and returns UUID of deleted address and Successfull message .If error Return error code and error Message.
+   */
+@RequestMapping(method = RequestMethod.DELETE, path = "/address/{address_id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<DeleteAddressResponse> deleteSavedAddress(@RequestHeader("authorization") final String authorization, @PathVariable(value = "address_id") final String addressUuid) throws AuthorizationFailedException, AddressNotFoundException{
+
+    String[] accessToken = authorization.split("Bearer ");
+
+    final String deleteAddress = addressBusinessService.deleteAddress(addressUuid, accessToken[1]);
+
+    DeleteAddressResponse deleteAddressResponse = new DeleteAddressResponse().id(UUID.fromString(deleteAddress)).status("Address Deleted");
+
+    return new ResponseEntity<DeleteAddressResponse>(deleteAddressResponse, HttpStatus.OK);
+}
 }
