@@ -70,7 +70,7 @@ public class AddressController {
 
         String[] bearerToken = authorization.split("Bearer ");
 
-        List<CustomerAddressEntity> customerAddressEntityList = customerService.getAddressByCustomer(bearerToken[1]);
+        List<CustomerAddressEntity> customerAddressEntityList = addressBusinessService.getAddressByCustomer(bearerToken[1]);
    List<AddressListResponse> addressListResponses =new ArrayList<>();
 
    for (CustomerAddressEntity cae :customerAddressEntityList){
