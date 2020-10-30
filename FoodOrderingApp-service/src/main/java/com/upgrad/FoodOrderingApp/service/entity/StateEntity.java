@@ -1,13 +1,13 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "state")
+@NamedQueries({
+        @NamedQuery(name = "getStateByUUID", query = "SELECT  s from StateEntity s where s.uuid = :uuid"),
+})
 public class StateEntity {
 
     @Id
