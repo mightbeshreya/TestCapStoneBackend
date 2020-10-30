@@ -101,31 +101,5 @@ public class CustomerService {
             return customerAuth;
         }
     }
-    //To get Address By Customer
-    @Transactional(propagation = Propagation.REQUIRED)
-    public List<CustomerAddressEntity> getAddressByCustomer(final String authorizationToken) throws AuthorizationFailedException {
 
-        CustomerAuthTokenEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
-
-        if (customerAuth.equals(null)) {
-            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
-        }
-        final ZonedDateTime customerSignOutTime = customerAuth.getLogoutAt();
-
-        if (customerSignOutTime != null && customerAuth != null) {
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
-        }
-
-        final ZonedDateTime customerSessionExpireTime = customerAuth.getExpiresAt();
-        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.systemDefault());
-        if (customerSessionExpireTime.compareTo(currentTime) < 0) {
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        }
-
-        List<CustomerAddressEntity> customerAddressEntity = customerAddressDao.getAddressByCustomer(customerAuth.getCustomer());
-
-
-        return customerAddressEntity;
-
-    }
 }
