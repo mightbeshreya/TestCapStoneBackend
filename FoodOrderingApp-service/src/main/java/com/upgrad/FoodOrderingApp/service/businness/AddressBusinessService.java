@@ -77,11 +77,11 @@ public class AddressBusinessService {
         return addressDao.save(customerAddressEntity);
     }
 
-    public String deleteAddress(String addressUuid, String authorization) throws AuthorizationFailedException, AddressNotFoundException {
+    public String deleteAddress(String addressId, String authorization) throws AuthorizationFailedException, AddressNotFoundException {
 
         //validate user
         CustomerAuthTokenEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorization);
-        AddressEntity addressEntity = addressDao.getAddressByUuid(addressUuid);
+        AddressEntity addressEntity = addressDao.getAddressByUuid(addressId);
         CustomerAddressEntity customerAddressEntity = customerAddressDao.getSingleAddress(addressEntity);
 
         if (customerAuthTokenEntity.equals(null)) {
@@ -99,9 +99,16 @@ public class AddressBusinessService {
         }
 
         if (customerAuthTokenEntity.getCustomer().getId().equals(customerAddressEntity.getCustomer().getId())) {
-            return addressDao.deleteAddress(addressUuid);
+            return addressDao.deleteAddress(addressId);
         } else {
             throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
         }
+        if (addressEntity.getUuid().length() == 0){
+            throw new AddressNotFoundException("ANF-005", "Address id can not be empty");
+            }
+        if (addressEntity == null) {
+            throw new AddressNotFoundException("ANF-003", "No address by this id");
+        }
     }
+
 }

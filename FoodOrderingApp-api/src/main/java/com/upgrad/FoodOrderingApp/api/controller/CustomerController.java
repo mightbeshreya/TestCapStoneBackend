@@ -62,6 +62,9 @@ public class CustomerController {
     public ResponseEntity<LoginResponse> login(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
         byte[] decode = Base64.getDecoder().decode(authorization.split("Basic")[1]);
         String decodedText = new String(decode);
+        if (decodedText.indexOf(":") == -1){
+            throw new AuthenticationFailedException("ATH-003", "Incorrect format of decoded customer name and password");
+        }
         String[] decodedArray = decodedText.split(":");
 
         CustomerAuthTokenEntity customerAuthTokenEntity = loginBusinessService.authentication(decodedArray[0], decodedArray[1]);
