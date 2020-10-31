@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "category")
 @NamedQueries(
         {
-
+            @NamedQuery(name = "getCategoryByUuid", query = "SELECT c from CategoryEntity c where c.uuid = :categoryId")
         }
 )
 public class CategoryEntity implements Serializable {
