@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/ItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/ItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/exception/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/exception/RestExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/controller/CategoryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CategoryBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/CategoryBusinessService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/CategoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/CategoryDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/CategoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/CategoryBusinessService.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/CategoryBusinessService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/CategoryEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/CategoryEntity.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,10 +297,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1604067407899" />
-    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1604179931625">
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1604186545191">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1604179931625" />
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1604186545191" />
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604169824248">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -310,22 +313,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1603732537271" />
-    <state width="1237" height="228" key="GridCell.Tab.0.bottom" timestamp="1604184565337">
+    <state width="1237" height="228" key="GridCell.Tab.0.bottom" timestamp="1604186595080">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
-    <state width="1237" height="228" key="GridCell.Tab.0.center" timestamp="1604184565337">
+    <state width="1237" height="228" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604186595080" />
+    <state width="1237" height="228" key="GridCell.Tab.0.center" timestamp="1604186595080">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
-    <state width="1237" height="228" key="GridCell.Tab.0.left" timestamp="1604184565337">
+    <state width="1237" height="228" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604186595080" />
+    <state width="1237" height="228" key="GridCell.Tab.0.left" timestamp="1604186595080">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
-    <state width="1237" height="228" key="GridCell.Tab.0.right" timestamp="1604184565337">
+    <state width="1237" height="228" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604186595080" />
+    <state width="1237" height="228" key="GridCell.Tab.0.right" timestamp="1604186595080">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
+    <state width="1237" height="228" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604186595080" />
     <state width="1237" height="237" key="GridCell.Tab.1.bottom" timestamp="1603817049009">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

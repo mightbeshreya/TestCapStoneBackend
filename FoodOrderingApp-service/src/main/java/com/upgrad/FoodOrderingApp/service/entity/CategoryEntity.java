@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "category")
 @NamedQueries(
         {
-            @NamedQuery(name = "getCategoryByUuid", query = "SELECT c from CategoryEntity c where c.uuid = :categoryId"),
+                @NamedQuery(name = "getCategoryByUuid", query = "SELECT c from CategoryEntity c where c.uuid = :categoryId"),
                 @NamedQuery(name = "getAllCategoriesOrderedByName", query = "select c from CategoryEntity c order by c.categoryName ASC")
         }
 )
@@ -27,7 +27,19 @@ public class CategoryEntity implements Serializable {
     @Column(name = "category_name")
     private String categoryName;
 
-    //private List<ItemEntity> itemEntities =new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
+//private List<ItemEntity> itemEntities =new ArrayList<>();
 
     public long getId() {
         return id;
