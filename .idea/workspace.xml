@@ -6,15 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2187793b-e64d-48fa-93dc-77d9c32a3738" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/RestaurantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/RestaurantController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/controller/RestaurantController.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/controller/RestaurantController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/RestaurantBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/RestaurantBusinessService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/RestaurantDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/RestaurantDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/RestaurantEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/RestaurantEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/RestaurantBusinessService.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/businness/RestaurantBusinessService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/dao/CategoryDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/dao/CategoryDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/dao/RestaurantDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/dao/RestaurantDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/RestaurantEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/RestaurantEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/exception/RestExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/target/classes/com/upgrad/FoodOrderingApp/api/exception/RestExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/ItemDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/ItemDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/ItemEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/entity/ItemEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/dao/ItemDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/dao/ItemDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/ItemEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/target/classes/com/upgrad/FoodOrderingApp/service/entity/ItemEntity.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,10 +295,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1604067407899" />
-    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1604121379961">
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser" timestamp="1604179931625">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1604121379961" />
+    <state x="446" y="25" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1604179931625" />
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604169824248">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -315,22 +311,22 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1603732537271" />
-    <state width="1237" height="228" key="GridCell.Tab.0.bottom" timestamp="1604176432217">
+    <state width="1237" height="228" key="GridCell.Tab.0.bottom" timestamp="1604184565337">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604176432217" />
-    <state width="1237" height="228" key="GridCell.Tab.0.center" timestamp="1604176432217">
+    <state width="1237" height="228" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
+    <state width="1237" height="228" key="GridCell.Tab.0.center" timestamp="1604184565337">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604176432217" />
-    <state width="1237" height="228" key="GridCell.Tab.0.left" timestamp="1604176432216">
+    <state width="1237" height="228" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
+    <state width="1237" height="228" key="GridCell.Tab.0.left" timestamp="1604184565337">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604176432216" />
-    <state width="1237" height="228" key="GridCell.Tab.0.right" timestamp="1604176432217">
+    <state width="1237" height="228" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
+    <state width="1237" height="228" key="GridCell.Tab.0.right" timestamp="1604184565337">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="228" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604176432217" />
+    <state width="1237" height="228" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604184565337" />
     <state width="1237" height="237" key="GridCell.Tab.1.bottom" timestamp="1603817049009">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -351,10 +347,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="121" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1603904245094" />
-    <state x="347" y="73" width="727" height="558" key="find.popup" timestamp="1604093256529">
+    <state x="347" y="73" width="727" height="558" key="find.popup" timestamp="1604183853574">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="347" y="73" width="727" height="558" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1604093256529" />
+    <state x="347" y="73" width="727" height="558" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1604183853574" />
     <state x="297" y="151" key="run.anything.popup" timestamp="1603908716384">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
