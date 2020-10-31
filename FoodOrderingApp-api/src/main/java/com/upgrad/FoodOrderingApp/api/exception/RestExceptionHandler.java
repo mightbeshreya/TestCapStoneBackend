@@ -47,4 +47,16 @@ public class RestExceptionHandler {
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
         );
     }
+    @ExceptionHandler(RestaurantNotFoundException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(RestaurantNotFoundException exe, WebRequest webRequest){
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
+        );
+    }
+    @ExceptionHandler(InvalidRatingException.class)
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(InvalidRatingException exe, WebRequest webRequest){
+        return new ResponseEntity<ErrorResponse>(
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
+        );
+    }
 }
