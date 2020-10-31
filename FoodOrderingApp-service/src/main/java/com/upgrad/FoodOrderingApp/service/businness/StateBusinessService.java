@@ -18,4 +18,8 @@ public class StateBusinessService {
         List<StateEntity> allStates = stateDao.getAllStates();
         return allStates;
     }
+
+    public StateEntity getStateById(String id) {
+        return stateDao.getStateByUuid(id);
+    }
 }

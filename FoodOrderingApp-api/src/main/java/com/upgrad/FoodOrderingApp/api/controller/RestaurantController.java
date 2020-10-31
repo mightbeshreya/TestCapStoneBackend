@@ -6,11 +6,9 @@ import com.upgrad.FoodOrderingApp.api.model.RestaurantList;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantListResponse;
 import com.upgrad.FoodOrderingApp.service.businness.AddressBusinessService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.RestaurantCategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.StateBusinessService;
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
-import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.upgrad.FoodOrderingApp.api.model.RestaurantListResponse;
@@ -43,6 +41,9 @@ public class RestaurantController {
     @Autowired
     private StateBusinessService stateBusinessService;
 
+    @Autowired
+    private RestaurantCategoryService restaurantCategoryService;
+
     @RequestMapping(method = RequestMethod.GET,path = "/restaurant",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getAllRestaurants() {
         List<RestaurantEntity> listOfRestaurants = restaurantBusinessService.getAllRestaurants();
@@ -58,7 +59,7 @@ public class RestaurantController {
             restaurantDetails.setAveragePrice(r.getAvgPriceForTwo());
             restaurantDetails.setNumberCustomersRated(r.getNumOfCustomersRated());
 
-            AddressEntity restaurantAddress = addressBusinessService.getAddressByRestaurantId(r.getAddress().getId());
+            AddressEntity restaurantAddress = addressBusinessService.getAddressById(r.getAddress().getUuid());
 
             RestaurantDetailsResponseAddress responseAddress = new RestaurantDetailsResponseAddress();
             responseAddress.setId(UUID.fromString(restaurantAddress.getUuid()));
@@ -67,7 +68,7 @@ public class RestaurantController {
             responseAddress.setCity(restaurantAddress.getCity());
             responseAddress.setPincode(restaurantAddress.getPincode());
 
-            StateEntity restaurantStateEntity = stateBusinessService.getStateById(restaurantAddress.getState_id().getId());
+            StateEntity restaurantStateEntity = stateBusinessService.getStateById(restaurantAddress.getState_id().getUuid());
 
             RestaurantDetailsResponseAddressState responseAddressState = new RestaurantDetailsResponseAddressState();
             responseAddressState.setId(UUID.fromString(restaurantStateEntity.getUuid()));
@@ -77,13 +78,14 @@ public class RestaurantController {
 
             restaurantDetails.setAddress(responseAddress);
 
-            List<String> restaurantCategories = new ArrayList<String>();
-            for(CategoryEntity c: r.getCategoryEntities()) {
-                restaurantCategories.add(c.getCategoryName());
+            List<RestaurantCategoryEntity> restaurantCategories = restaurantCategoryService.getRestaurantCategories(r);
+            List<String> stringCategories = new ArrayList<>();
+            for(RestaurantCategoryEntity c: restaurantCategories) {
+                stringCategories.add(c.getCategory().getCategoryName());
             }
-            Collections.sort(restaurantCategories);
+            Collections.sort(stringCategories);
 
-            restaurantDetails.setCategories(String.join(",", restaurantCategories));
+            restaurantDetails.setCategories(String.join(", ", stringCategories));
 
             restaurantListResponse.addRestaurantsItem(restaurantDetails);
         }

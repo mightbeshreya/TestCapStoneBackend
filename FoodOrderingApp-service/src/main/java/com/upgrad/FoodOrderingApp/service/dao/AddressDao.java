@@ -64,4 +64,13 @@ public class AddressDao {
             return null;
         }
     }
+
+    public AddressEntity getAddressById(Integer id) {
+        try {
+            return entityManager.createNamedQuery("getAddressById", AddressEntity.class)
+                    .setParameter("id", id).getSingleResult();
+        }catch(NoResultException nre) {
+            return null;
+        }
+    }
 }

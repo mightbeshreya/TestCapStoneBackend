@@ -32,4 +32,13 @@ public class StateDao {
             return null;
         }
     }
+
+    public StateEntity getStateById(Integer id) {
+        try {
+            return entityManager.createNamedQuery("getStateById", StateEntity.class)
+                    .setParameter("id", id).getSingleResult();
+        }catch(NoResultException nre) {
+            return null;
+        }
+    }
 }

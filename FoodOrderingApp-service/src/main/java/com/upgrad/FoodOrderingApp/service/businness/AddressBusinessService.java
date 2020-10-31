@@ -140,4 +140,8 @@ public class AddressBusinessService {
 
     }
 
+    public AddressEntity getAddressById(String id) {
+        return addressDao.getAddressByUuid(id);
+    }
+
 }

@@ -15,18 +15,18 @@ import java.io.Serializable;
 )
 public class RestaurantItemEntity implements Serializable {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "ITEM_ID")
+    @JoinColumn(name = "item_id")
     private ItemEntity item;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "RESTAURANT_ID")
+    @JoinColumn(name = "restaurant_id")
     private RestaurantEntity restaurant;
 
     public long getId() {

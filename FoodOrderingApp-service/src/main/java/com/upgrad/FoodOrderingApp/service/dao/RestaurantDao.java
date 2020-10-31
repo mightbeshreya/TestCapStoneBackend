@@ -10,15 +10,16 @@ import java.util.List;
 
 @Repository
 public class RestaurantDao {
-
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
-    public List<RestaurantEntity> getAllRestaurant(){
-    try {
-        return entityManager.createNamedQuery("getAllRestaurants", RestaurantEntity.class).getResultList();
-    } catch (NoResultException nre){
-        return null;
-    }
+    public List<RestaurantEntity> getAllRestaurants() {
+        try {
+            List<RestaurantEntity> allRestaurants = entityManager.createNamedQuery("getAllRestaurants", RestaurantEntity.class)
+                    .getResultList();
+            return allRestaurants;
+        }catch (NoResultException nre) {
+            return null;
+        }
     }
 }
