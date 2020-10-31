@@ -18,24 +18,24 @@ import java.io.Serializable;
 )
 public class ItemEntity implements Serializable {
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "uuid")
+    @Column(name = "UUID")
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "item_name")
+    @Column(name = "ITEM_NAME")
     @NotNull
     @Size(max = 30)
     private String itemName;
 
-    @Column(name="price")
+    @Column(name="PRICE")
     @NotNull
     private Integer price;
 
-    @Column(name = "type")
+    @Column(name = "TYPE")
     @NotNull
     @Size(max = 10)
     private ItemType type;
