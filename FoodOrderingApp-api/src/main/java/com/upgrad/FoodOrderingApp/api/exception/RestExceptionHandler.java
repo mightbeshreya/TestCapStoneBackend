@@ -11,53 +11,59 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class RestExceptionHandler {
     @ExceptionHandler(SignUpRestrictedException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(SignUpRestrictedException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(SignUpRestrictedException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.BAD_REQUEST
         );
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(AuthorizationFailedException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(AuthorizationFailedException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.UNAUTHORIZED
         );
     }
+
     @ExceptionHandler(UpdateCustomerException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(UpdateCustomerException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(UpdateCustomerException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
         );
     }
+
     @ExceptionHandler(SaveAddressException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(SaveAddressException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(SaveAddressException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
         );
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(CategoryNotFoundException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(CategoryNotFoundException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.NOT_FOUND
         );
     }
+
     @ExceptionHandler(RestaurantNotFoundException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(RestaurantNotFoundException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(RestaurantNotFoundException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.NOT_FOUND
         );
     }
+
     @ExceptionHandler(InvalidRatingException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(InvalidRatingException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(InvalidRatingException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.BAD_REQUEST
         );
     }
+
     @ExceptionHandler(AddressNotFoundException.class)
-    public ResponseEntity<ErrorResponse> resourceNotFoundException(AddressNotFoundException exe, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> resourceNotFoundException(AddressNotFoundException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
                 new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.NOT_FOUND
         );
 
+    }
 }
