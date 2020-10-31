@@ -15,7 +15,9 @@ import java.util.Set;
 @Table(name = "restaurant")
 @NamedQueries(
         {
-                @NamedQuery(name = "getAllRestaurants", query = "select r from RestaurantEntity r order by r.customerRating desc")
+                @NamedQuery(name = "getAllRestaurants", query = "select r from RestaurantEntity r order by r.customerRating desc"),
+                @NamedQuery(name = "getRestaurantByUuid", query = "select r from RestaurantEntity r where r.uuid = :uuid"),
+                @NamedQuery(name = "restaurantByName", query = "select r from RestaurantEntity r where lower(r.restaurantName) like :restaurant_name_lower")
         }
 )
 public class RestaurantEntity implements Serializable {
