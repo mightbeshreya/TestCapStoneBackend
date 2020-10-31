@@ -27,11 +27,35 @@ public class RestaurantBusinessService {
 
     public List<RestaurantEntity> restaurantByName(String restaurantName) throws RestaurantNotFoundException {
 
-        if (restaurantName == null || restaurantName == ""){
+        if (restaurantName == null || restaurantName == "") {
             throw new RestaurantNotFoundException("RNF-003", "Restaurant name field should not be empty");
         }
 
         List<RestaurantEntity> restaurantEntities = restaurantDao.restaurantByName(restaurantName);
         return restaurantEntities;
+    }
+
+    public RestaurantEntity restaurantByUuid(String uuid) throws RestaurantNotFoundException {
+        if (uuid == null || uuid == "") {
+            throw new RestaurantNotFoundException("RNF-002", "Restaurant id field should not be empty");
+        }
+        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(uuid);
+
+        if (restaurantEntity == null) {
+            throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
+        }
+
+        return restaurantEntity;
+        /* List<RestaurantItemEntity> restaurantItemEntities = restaurantItemDao.getItemByRestaurant(restaurantEntity);
+
+        if(restaurantItemEntities.isEmpty()) {
+        return null;
+    }
+    List<RestaurantItemEntity> restaurantEntities = new ArrayList<RestaurantItemEntity>();
+        for(RestaurantItemEntity rc: restaurantItemEntities) {
+        restaurantEntities.add(rc.getItem());
+    }restaurantEntity
+        return restaurantEntities;
+}*/
     }
 }

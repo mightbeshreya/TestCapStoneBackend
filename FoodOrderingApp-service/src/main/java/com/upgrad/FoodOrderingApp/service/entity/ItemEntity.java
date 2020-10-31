@@ -1,6 +1,8 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 
+import com.upgrad.FoodOrderingApp.service.common.ItemType;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,7 +38,7 @@ public class ItemEntity implements Serializable {
     @Column(name = "type")
     @NotNull
     @Size(max = 10)
-    private String type;
+    private ItemType type;
 
     public long getId() {
         return id;
@@ -70,10 +72,10 @@ public class ItemEntity implements Serializable {
         this.price = price;
     }
 
-    public String getType() {
+    public ItemType getType() {
         return type;
     }
-    public void setType(String type) {
+    public void setType(ItemType type) {
         this.type = type;
     }
 }

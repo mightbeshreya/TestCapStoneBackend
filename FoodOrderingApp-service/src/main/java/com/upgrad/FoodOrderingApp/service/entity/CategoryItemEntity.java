@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Table(name = "category_item")
 @NamedQueries(
         {
-
+                @NamedQuery(name = "getItemsByCategory", query = "select c from CategoryItemEntity c where c.category = :category order by lower(c.item.itemName) ASC")
         }
 )
 public class CategoryItemEntity implements Serializable {
