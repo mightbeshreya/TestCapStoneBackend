@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
@@ -64,6 +64,8 @@ public class RestaurantEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName="id", nullable = false)
     )
     private Set<CategoryEntity> categoryEntities = new HashSet<>(); */
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CategoryEntity> category = new ArrayList<CategoryEntity>();
 
     public long getId() {
         return id;
@@ -87,6 +89,14 @@ public class RestaurantEntity implements Serializable {
 
     public void setRestaurantName(String restaurantName) {
         this.restaurantName = restaurantName;
+    }
+
+    public List<CategoryEntity> getCategories() {
+        return category;
+    }
+
+    public void setCategories(List<CategoryEntity> categories) {
+        this.category = categories;
     }
 
     public String getPhotoUrl() {

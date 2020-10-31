@@ -3,7 +3,9 @@ package com.upgrad.FoodOrderingApp.api.controller;
 import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
+import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
+import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
 import java.util.*;
 
 @RestController
@@ -36,6 +40,9 @@ public class RestaurantController {
 
     @Autowired
     ItemBusinessService itemBusinessService;
+
+    @Autowired
+    CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getAllRestaurants() {
@@ -231,6 +238,23 @@ public class RestaurantController {
                 .categories(categoryLists);
 
         return new ResponseEntity<RestaurantDetailsResponse>(restaurantDetailsResponse, HttpStatus.OK);
+    }
+    @RequestMapping(method = RequestMethod.PUT, path = "/restaurant/{restaurant_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<RestaurantUpdatedResponse> updateRestaurantDetails(@RequestParam Double customerRating , @PathVariable("restaurant_id") final String restaurant_id, @RequestHeader("authorization") final String authorization) throws RestaurantNotFoundException, InvalidRatingException, AuthorizationFailedException {
+        RestaurantEntity restaurantEntity = new RestaurantEntity();
+        restaurantEntity.setUuid(restaurant_id);
+        String bearerToken = null;
+        try {
+            bearerToken = authorization.split("Bearer ")[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            bearerToken = authorization;
+        }
+        restaurantEntity.setCustomerRating(BigDecimal.valueOf(customerRating));
+        RestaurantEntity updatedRestaurantEntity = restaurantBusinessService.updateRestaurantDetails(restaurantEntity,bearerToken);
+        RestaurantUpdatedResponse restUpdateResponse = new RestaurantUpdatedResponse()
+                .id(UUID.fromString(updatedRestaurantEntity.getUuid()))
+                .status("RESTAURANT RATING UPDATED SUCCESSFULLY");
+        return new ResponseEntity<RestaurantUpdatedResponse>(restUpdateResponse, HttpStatus.OK);
     }
 
 }
