@@ -15,53 +15,53 @@ import java.util.Set;
 @Table(name = "restaurant")
 @NamedQueries(
         {
-                @NamedQuery(name = "allRestaurants", query = "select r from RestaurantEntity r order by r.customerRating desc")
+                @NamedQuery(name = "getAllRestaurants", query = "select r from RestaurantEntity r order by r.customerRating desc")
         }
 )
 public class RestaurantEntity implements Serializable {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
     @NotNull
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "RESTAURANT_NAME")
+    @Column(name = "restaurant_name")
     @NotNull
     @Size(max = 50)
     private String restaurantName;
 
-    @Column(name = "PHOTO_URL")
+    @Column(name = "photo_url")
     @NotNull
     @Size(max = 255)
     private String photoUrl;
 
-    @Column(name = "CUSTOMER_RATING")
+    @Column(name = "customer_rating")
     @NotNull
     private BigDecimal customerRating;
 
-    @Column(name = "AVERAGE_PRICE_FOR_TWO")
+    @Column(name = "average_price_for_two")
     @NotNull
     private Integer avgPriceForTwo;
 
-    @Column(name = "NUMBER_OF_CUSTOMERS_RATED")
+    @Column(name = "number_of_customers_rated")
     @NotNull
     private Integer numOfCustomersRated;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "ADDRESS_ID")
+    @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    /*@OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "restaurant_category",
             joinColumns = @JoinColumn(name = "restaurant_id", referencedColumnName="id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName="id", nullable = false)
     )
-    private Set<CategoryEntity> categoryEntities = new HashSet<>();
+    private Set<CategoryEntity> categoryEntities = new HashSet<>(); */
 
     public long getId() {
         return id;
@@ -127,11 +127,11 @@ public class RestaurantEntity implements Serializable {
         this.address = address;
     }
 
-    public Set<CategoryEntity> getCategoryEntities() {
+    /*public Set<CategoryEntity> getCategoryEntities() {
         return categoryEntities;
     }
 
     public void setCategoryEntities(Set<CategoryEntity> categoryEntities) {
         this.categoryEntities = categoryEntities;
-    }
+    } */
 }

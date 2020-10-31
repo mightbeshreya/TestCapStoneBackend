@@ -15,18 +15,18 @@ import java.util.List;
 )
 public class CategoryEntity implements Serializable {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "CATEGORY_NAME")
+    @Column(name = "category_name")
     private String categoryName;
 
-    private List<ItemEntity> itemEntities =new ArrayList<>();
+    //private List<ItemEntity> itemEntities =new ArrayList<>();
 
     public long getId() {
         return id;
@@ -52,11 +52,11 @@ public class CategoryEntity implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public List<ItemEntity> getItemEntities() {
+    /*public List<ItemEntity> getItemEntities() {
         return itemEntities;
     }
 
     public void setItemEntities(List<ItemEntity> itemEntities) {
         this.itemEntities = itemEntities;
-    }
+    } */
 }

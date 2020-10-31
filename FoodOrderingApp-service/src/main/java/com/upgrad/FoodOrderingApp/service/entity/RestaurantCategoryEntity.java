@@ -10,23 +10,23 @@ import java.io.Serializable;
 @Table(name = "restaurant_category")
 @NamedQueries(
         {
-
+                @NamedQuery(name = "getRestaurantCategories", query = "SELECT rc from RestaurantCategoryEntity rc where rc.restaurant=:restaurant"),
         }
 )
 public class RestaurantCategoryEntity implements Serializable {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "RESTAURANT_ID")
+    @JoinColumn(name = "restaurant_id")
     private RestaurantEntity restaurant;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "CATEGORY_ID")
+    @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
     public long getId() {
