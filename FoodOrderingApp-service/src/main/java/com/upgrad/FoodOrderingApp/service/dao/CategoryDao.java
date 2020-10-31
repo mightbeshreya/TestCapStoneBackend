@@ -40,4 +40,14 @@ public class CategoryDao {
             return null;
         }
     }
+
+    public List<CategoryEntity> getAllCategoriesOrderedByName() {
+        try {
+            List<CategoryEntity> categoryEntities = entityManager.createNamedQuery("getAllCategoriesOrderedByName", CategoryEntity.class).getResultList();
+            return categoryEntities;
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
 }
+
