@@ -60,7 +60,7 @@ public class CustomerController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/customer/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
-        byte[] decode = Base64.getDecoder().decode(authorization.split("Basic")[1]);
+        byte[] decode = Base64.getDecoder().decode(authorization.split(" ")[1]);
         String decodedText = new String(decode);
         if (decodedText.indexOf(":") == -1){
             throw new AuthenticationFailedException("ATH-003", "Incorrect format of decoded customer name and password");

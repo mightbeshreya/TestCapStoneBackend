@@ -36,9 +36,10 @@ public class LoginBusinessService {
             customerAuthTokenEntity.setUuid(UUID.randomUUID().toString());
             final ZonedDateTime now = ZonedDateTime.now();
             final ZonedDateTime expiresAt = now.plusHours(8);
+            customerAuthTokenEntity.setExpiresAt(expiresAt);
             customerAuthTokenEntity.setAccessToken(jwtTokenProvider.generateToken(customerAuthTokenEntity.getUuid(), now, expiresAt));
             customerAuthTokenEntity.setLoginAt(now);
-            customerAuthTokenEntity.setLogoutAt(expiresAt);
+            //customerAuthTokenEntity.setLogoutAt(expiresAt);
             customerDao.createAuthToken(customerAuthTokenEntity);
             return customerAuthTokenEntity;
         } else {

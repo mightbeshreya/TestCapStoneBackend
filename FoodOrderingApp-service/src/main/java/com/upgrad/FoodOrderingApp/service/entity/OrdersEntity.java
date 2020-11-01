@@ -28,7 +28,7 @@ public class OrdersEntity implements Serializable {
     private double bill;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "COUPEN_ID")
+    @JoinColumn(name = "COUPON_ID")
     private CouponEntity coupon;
 
     @Column(name = "DISCOUNT")

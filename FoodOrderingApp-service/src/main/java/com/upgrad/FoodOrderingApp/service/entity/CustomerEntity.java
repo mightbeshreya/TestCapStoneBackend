@@ -33,7 +33,6 @@ public class CustomerEntity implements Serializable {
     private String firstname;
 
     @Column(name = "lastname")
-    @NotNull
     @Size(max = 30)
     private String lastname;
 

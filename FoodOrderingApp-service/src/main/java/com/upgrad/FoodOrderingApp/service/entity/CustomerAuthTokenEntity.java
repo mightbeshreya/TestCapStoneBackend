@@ -35,7 +35,6 @@ public class CustomerAuthTokenEntity {
     private ZonedDateTime loginAt;
 
     @Column(name = "logout_at")
-    @NotNull
     private ZonedDateTime logoutAt;
 
     @Column(name = "expires_at")

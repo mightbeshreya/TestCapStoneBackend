@@ -187,7 +187,9 @@ public class RestaurantController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/restaurant/{restaurant_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RestaurantDetailsResponse> getRestaurantByRestaurantID(@PathVariable("restaurant_id") final String restaurantUuid) throws RestaurantNotFoundException {
+    public ResponseEntity<RestaurantDetailsResponse> getRestaurantByRestaurantID(
+            @PathVariable("restaurant_id") final String restaurantUuid)
+            throws RestaurantNotFoundException {
 
         RestaurantEntity restaurantEntity = restaurantBusinessService.restaurantByUuid(restaurantUuid);
 
