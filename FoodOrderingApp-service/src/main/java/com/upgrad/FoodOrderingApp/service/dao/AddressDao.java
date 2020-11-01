@@ -24,7 +24,7 @@ public class AddressDao {
         return addressEntity;
     }
 
-    public AddressEntity getAddressByUuid(String uuid) {
+    public AddressEntity getAddressByUUID(String uuid) {
         try {
             AddressEntity addressEntity = entityManager.createNamedQuery("getAddressByUuid", AddressEntity.class).setParameter("uuid", uuid).getSingleResult();
             return addressEntity;
@@ -57,7 +57,7 @@ public class AddressDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public String deleteAddress(String address_uuid) {
         try {
-            AddressEntity addressEntity = getAddressByUuid(address_uuid);
+            AddressEntity addressEntity = getAddressByUUID(address_uuid);
             entityManager.remove(addressEntity);
             return addressEntity.getUuid();
         } catch (NoResultException nre) {

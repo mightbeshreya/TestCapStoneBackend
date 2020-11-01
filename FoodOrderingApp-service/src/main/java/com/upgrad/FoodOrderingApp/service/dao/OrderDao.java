@@ -36,7 +36,7 @@ public class OrderDao {
         }
     }
 
-    public OrdersEntity saveOrder(OrdersEntity ordersEntity) {
+    public OrdersEntity saveORDER(OrdersEntity ordersEntity) {
         try {
             entityManager.persist(ordersEntity);
             return ordersEntity;

@@ -79,22 +79,22 @@ public class OrderService {
         if(customerAuthTokenEntity.getExpiresAt().isBefore(now) || customerAuthTokenEntity.getExpiresAt().isEqual(now)){
             throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
         }
-        CouponEntity couponEntity = couponDao.getCouponByUuid(couponUuid);
+        CouponEntity couponEntity = couponDao.getCouponByUUID(couponUuid);
         if(couponEntity == null) {
             throw new CouponNotFoundException("CPF-002", "No coupon by this id");
         }
-        AddressEntity addressEntity = addressDao.getAddressByUuid(addressUuid);
+        AddressEntity addressEntity = addressDao.getAddressByUUID(addressUuid);
         if(addressEntity == null) {
             throw new AddressNotFoundException("ANF-003", "No address by this id");
         }
 
         CustomerEntity customerEntity = customerAuthTokenEntity.getCustomer();
-        CustomerAddressEntity customerAddressEntity = customerAddressDao.getEntityByCustomerId(customerEntity);
+        CustomerAddressEntity customerAddressEntity = customerAddressDao.getEntityByCustomerID(customerEntity);
         if(addressEntity!=customerAddressEntity.getAddress()) {
             throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
         }
 
-        PaymentEntity paymentEntity = paymentDao.getPaymentMethodByUuid(paymentUuid) ;
+        PaymentEntity paymentEntity = paymentDao.getPaymentMethodByUUID(paymentUuid) ;
         if(paymentEntity == null ) {
             throw new PaymentMethodNotFoundException("PNF-002", "No payment method found by this id");
         }
@@ -120,7 +120,7 @@ public class OrderService {
         Timestamp instant= Timestamp.from(Instant.now());
         ordersEntity.setDate(instant);
 
-        OrdersEntity savedOrderEntity = orderDao.saveOrder(ordersEntity);
+        OrdersEntity savedOrderEntity = orderDao.saveORDER(ordersEntity);
         return savedOrderEntity;
     }
 }

@@ -109,7 +109,7 @@ public class AddressBusinessService {
 
         //validate user
         CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorization);
-        AddressEntity addressEntity = addressDao.getAddressByUuid(addressId);
+        AddressEntity addressEntity = addressDao.getAddressByUUID(addressId);
         CustomerAddressEntity customerAddressEntity = customerAddressDao.getSingleAddress(addressEntity);
 
         if (customerAuthTokenEntity.equals(null)) {
@@ -140,7 +140,7 @@ public class AddressBusinessService {
     }
 
     public AddressEntity getAddressById(String id) {
-        return addressDao.getAddressByUuid(id);
+        return addressDao.getAddressByUUID(id);
     }
 
 }

@@ -35,7 +35,7 @@ return (List<CustomerAddressEntity>) entityManager.createNamedQuery("getCustomer
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerAddressEntity getEntityByCustomerId(CustomerEntity customerEntity) {
+    public CustomerAddressEntity getEntityByCustomerID(CustomerEntity customerEntity) {
         try {
             return entityManager.createNamedQuery("getCustomerAddress", CustomerAddressEntity.class)
                     .setParameter("customer", customerEntity).getSingleResult();
