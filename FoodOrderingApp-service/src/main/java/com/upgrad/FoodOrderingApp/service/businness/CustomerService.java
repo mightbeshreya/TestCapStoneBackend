@@ -42,7 +42,11 @@ public class CustomerService {
         if (customerEntity.getFirstname() == null
                 || customerEntity.getEmail() == null
                 || customerEntity.getPassword() == null
-                || customerEntity.getContactNumber() == null) {
+                || customerEntity.getContactNumber() == null
+                || customerEntity.getFirstname() == ""
+                || customerEntity.getEmail() == ""
+                || customerEntity.getPassword() == ""
+                || customerEntity.getContactNumber() == "") {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
         }
         validateCustomerData(customerEntity);
