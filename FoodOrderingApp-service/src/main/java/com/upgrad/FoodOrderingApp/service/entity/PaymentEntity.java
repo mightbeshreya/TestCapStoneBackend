@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "payment")
 @NamedQueries({
-
+        @NamedQuery(name = "getAllPaymentMethods", query = "SELECT p from PaymentEntity p")
 })
 public class PaymentEntity implements Serializable {
 
@@ -25,6 +25,7 @@ public class PaymentEntity implements Serializable {
     @Column(name = "PAYMENT_NAME")
     @Size(max = 255)
     private String paymentName;
+
 
     public PaymentEntity() {
 
