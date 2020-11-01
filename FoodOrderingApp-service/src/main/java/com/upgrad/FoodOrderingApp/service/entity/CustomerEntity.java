@@ -75,7 +75,7 @@ public class CustomerEntity implements Serializable {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
+    public void setFirstName(String firstname) {
         this.firstname = firstname;
     }
 
@@ -83,7 +83,7 @@ public class CustomerEntity implements Serializable {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
+    public void setLastName(String lastname) {
         this.lastname = lastname;
     }
 

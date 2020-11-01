@@ -21,7 +21,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(AuthorizationFailedException.class)
     public ResponseEntity<ErrorResponse> resourceNotFoundException(AuthorizationFailedException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
-                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.UNAUTHORIZED
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
         );
     }
 
@@ -71,7 +71,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(AuthenticationFailedException.class)
     public ResponseEntity<ErrorResponse> resourceNotFoundException(AuthenticationFailedException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
-                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.NOT_FOUND
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.UNAUTHORIZED
         );
 
     }

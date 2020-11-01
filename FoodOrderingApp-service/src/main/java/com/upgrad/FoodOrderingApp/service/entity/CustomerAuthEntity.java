@@ -8,7 +8,8 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "customer_auth")
 @NamedQueries({
-@NamedQuery(name= "getToken", query = "select ca from CustomerAuthEntity ca where ca.accessToken =:accessToken"),
+        @NamedQuery(name= "getToken", query = "select ca from CustomerAuthEntity ca where ca.accessToken =:accessToken"),
+        @NamedQuery(name = "customerAuthTokenByAccessToken" , query = "select ct from CustomerAuthEntity ct where ct.accessToken = :accessToken "),
 })
 public class CustomerAuthEntity {
 

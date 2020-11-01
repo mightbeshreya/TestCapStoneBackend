@@ -22,7 +22,7 @@ public class UpdatedCustomerBusinessService {
       If error throws exception with error code and error message.
       */
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerEntity customerToBeUpdated(String accessToken, String firstName, String lastName) throws AuthorizationFailedException, UpdateCustomerException {
+    public CustomerEntity updateCustomer(String accessToken, String firstName, String lastName) throws AuthorizationFailedException, UpdateCustomerException {
 
         CustomerAuthEntity customerauth = customerDao.checkAuthToken(accessToken);
         final ZonedDateTime current = ZonedDateTime.now();
@@ -41,8 +41,8 @@ public class UpdatedCustomerBusinessService {
         }
 
         CustomerEntity customerEntity = customerauth.getCustomer();
-        customerEntity.setFirstname(firstName);
-        customerEntity.setLastname(lastName);
+        customerEntity.setFirstName(firstName);
+        customerEntity.setLastName(lastName);
         CustomerEntity updatedCustomer = customerDao.updateCustomerDetails(customerEntity);
         return updatedCustomer;
     }

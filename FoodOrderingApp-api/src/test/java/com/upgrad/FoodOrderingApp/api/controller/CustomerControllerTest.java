@@ -1,8 +1,6 @@
 
 package com.upgrad.FoodOrderingApp.api.controller;
 
-//import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
-//import com.upgrad.FoodOrderingApp.service.businness.;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
@@ -63,15 +61,13 @@ public class CustomerControllerTest {
     //This test case passes when you have handled the exception of trying to signup but the request field is empty.
     @Test
     public void shouldNotSignUpForEmptyRequest() throws Exception {
-        when(mockCustomerService.saveCustomer(any()))
-                .thenThrow(new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled"));
         mockMvc
                 .perform(post("/customer/signup")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content("{\"first_name\":\"first\", \"last_name\":\"last\", \"email_address\":\"\", \"contact_number\":\"9090909090\", \"password\":\"qawsedrf@123\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("SGR-005"));
-        verify(mockCustomerService, times(1)).saveCustomer(any());
+        verify(mockCustomerService, times(0)).saveCustomer(any());
     }
 
     //This test case passes when you have handled the exception of trying to signup with invalid email-id.
@@ -201,9 +197,10 @@ public class CustomerControllerTest {
         verify(mockCustomerService, times(1)).authenticate("9090909090", "IncorrectPassword");
     }
 
+
     // ----------------------------- POST /customer/logout --------------------------------
 
-  /*  //This test case passes when you are able to logout successfully.
+    //This test case passes when you are able to logout successfully.
     @Test
     public void shouldLogoutForValidRequest() throws Exception {
         final CustomerAuthEntity createdCustomerAuthEntity = new CustomerAuthEntity();
@@ -266,7 +263,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("code").value("ATHR-003"));
         verify(mockCustomerService, times(1)).logout("auth");
     }
-
+/*
     // ----------------------------- PUT /customer --------------------------------
 
     //This test case passes when you are able to update customer details successfully.
@@ -363,7 +360,7 @@ public class CustomerControllerTest {
         verify(mockCustomerService, times(1)).getCustomer("auth");
         verify(mockCustomerService, times(0)).updateCustomer(any());
     }
-
+/*
     // ----------------------------- PUT /customer/password --------------------------------
 
     //This test case passes when you are able to update your password successfully.
@@ -487,6 +484,6 @@ public class CustomerControllerTest {
         verify(mockCustomerService, times(1)).getCustomer("auth");
         verify(mockCustomerService, times(1)).updateCustomerPassword("oldPwd", "newPwd", customerEntity);
     }
-    */
+*/
 }
 
