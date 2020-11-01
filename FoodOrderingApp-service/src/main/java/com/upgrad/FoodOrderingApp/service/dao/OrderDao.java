@@ -5,6 +5,7 @@ import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -31,6 +32,15 @@ public class OrderDao {
             List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByCustomer", OrdersEntity.class).setParameter("customer", customerEntity).getResultList();
             return ordersEntities;
         } catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    public OrdersEntity saveOrder(OrdersEntity ordersEntity) {
+        try {
+            entityManager.persist(ordersEntity);
+            return ordersEntity;
+        }catch (Exception e) {
             return null;
         }
     }

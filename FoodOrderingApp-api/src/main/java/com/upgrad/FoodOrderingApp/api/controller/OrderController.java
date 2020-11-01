@@ -8,9 +8,7 @@ import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
-import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
-import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
-import com.upgrad.FoodOrderingApp.service.exception.CouponNotFoundException;
+import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -132,5 +130,36 @@ public class OrderController {
             return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(), HttpStatus.OK);
         }
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/order", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader("authorization") final String authorization,
+                                                       @RequestBody(required = false) final SaveOrderRequest saveOrderRequest)
+            throws AuthorizationFailedException, CouponNotFoundException, AddressNotFoundException,
+            PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException
+    {
+        String[] authorizedData = authorization.split(" ");
+        String accessToken;
+        try {
+            accessToken = authorizedData[1];
+        }catch (ArrayIndexOutOfBoundsException e) {
+            accessToken = authorizedData[0];
+        }
+
+        String couponUuid = saveOrderRequest.getCouponId().toString();
+        String addressUuid = saveOrderRequest.getAddressId();
+        String paymentUuid = saveOrderRequest.getPaymentId().toString();
+        String restaurantUuid = saveOrderRequest.getRestaurantId().toString();
+        BigDecimal bill = saveOrderRequest.getBill();
+
+        List<ItemQuantity> itemList = saveOrderRequest.getItemQuantities();
+        String itemUuid = itemList.get(0).getItemId().toString();
+        OrderList orderList = new OrderList();
+        OrdersEntity ordersEntity = orderBusinessService.saveOrderList(accessToken,couponUuid,
+                addressUuid,paymentUuid,restaurantUuid,itemUuid, bill);
+        SaveOrderResponse saveOrderResponse = new SaveOrderResponse().id(ordersEntity.getUuid())
+                .status("ORDER SUCCESSFULLY PLACED");
+        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse, HttpStatus.CREATED);
     }
 }

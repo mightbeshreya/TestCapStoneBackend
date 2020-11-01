@@ -4,6 +4,8 @@ import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -27,6 +29,16 @@ return (List<CustomerAddressEntity>) entityManager.createNamedQuery("getCustomer
     public CustomerAddressEntity getSingleAddress(final AddressEntity address){
         try {
             return entityManager.createNamedQuery("getAddress", CustomerAddressEntity.class).setParameter("address", address).getSingleResult();
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CustomerAddressEntity getEntityByCustomerId(CustomerEntity customerEntity) {
+        try {
+            return entityManager.createNamedQuery("getCustomerAddress", CustomerAddressEntity.class)
+                    .setParameter("customer", customerEntity).getSingleResult();
         }catch (NoResultException nre){
             return null;
         }
