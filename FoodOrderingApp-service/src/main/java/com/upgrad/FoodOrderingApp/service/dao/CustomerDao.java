@@ -31,7 +31,7 @@ public class CustomerDao {
 
     public CustomerEntity checkUUID(final String uuid) {
         try {
-            return entityManager.createNamedQuery("userByUUID", CustomerEntity.class).setParameter("uuid", uuid)
+            return entityManager.createNamedQuery("userByUuid", CustomerEntity.class).setParameter("uuid", uuid)
                     .getSingleResult();
         } catch (NoResultException nre) {
             return null;
@@ -72,5 +72,14 @@ public class CustomerDao {
     public CustomerEntity updatePassword(CustomerEntity updatedCustomerPassword) {
         entityManager.merge(updatedCustomerPassword);
         return updatedCustomerPassword;
+    }
+
+    public CustomerEntity getCustomerByUuid(String customerUuid) {
+        try {
+            CustomerEntity customer = entityManager.createNamedQuery("userByUuid", CustomerEntity.class).setParameter("uuid", customerUuid).getSingleResult();
+            return customer;
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
 }

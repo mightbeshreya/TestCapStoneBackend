@@ -16,11 +16,21 @@ public class OrderItemDao {
     private EntityManager entityManager;
 
     public List<OrderItemEntity> getItemsByOrders(OrdersEntity ordersEntity) {
-        try{
-            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("ordersEntity",ordersEntity).getResultList();
+        try {
+            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("order", ordersEntity).getResultList();
             return orderItemEntities;
-        }catch (NoResultException nre) {
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public List<OrderItemEntity> getOrderItemsByOrder(OrdersEntity ordersEntity) {
+        try {
+            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getOrderItemByOrder", OrderItemEntity.class).setParameter("order", ordersEntity).getResultList();
+            return orderItemEntities;
+        } catch (NoResultException nre) {
             return null;
         }
     }
 }
+
