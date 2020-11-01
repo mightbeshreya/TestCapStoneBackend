@@ -1,6 +1,8 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
+//import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
+//import com.upgrad.FoodOrderingApp.service.businness.;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
@@ -131,7 +133,7 @@ public class CustomerControllerTest {
     }
 
     // ----------------------------- POST /customer/login --------------------------------
-
+/*
     //This test case passes when you are able to login successfully.
     @Test
     public void shouldLoginForValidRequest() throws Exception {
@@ -482,6 +484,6 @@ public class CustomerControllerTest {
         verify(mockCustomerService, times(1)).getCustomer("auth");
         verify(mockCustomerService, times(1)).updateCustomerPassword("oldPwd", "newPwd", customerEntity);
     }
-
+    */
 }
-*/
+

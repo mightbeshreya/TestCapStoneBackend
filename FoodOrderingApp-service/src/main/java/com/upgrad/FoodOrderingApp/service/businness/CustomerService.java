@@ -34,15 +34,15 @@ public class CustomerService {
     CustomerAddressDao customerAddressDao;
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerEntity signup(CustomerEntity customerEntity) throws SignUpRestrictedException {
+    public CustomerEntity saveCustomer(CustomerEntity customerEntity) throws SignUpRestrictedException {
         CustomerEntity isContactNumberExist = customerDao.IsContactNumberExists(customerEntity.getContactNumber());
         if (isContactNumberExist != null) {
             throw new SignUpRestrictedException("SGR-001", "This contact number is already registered! Try other contact number.");
         }
         if (customerEntity.getFirstname() == null
-                && customerEntity.getEmail() == null
-                && customerEntity.getPassword() == null
-                && customerEntity.getContactNumber() == null) {
+                || customerEntity.getEmail() == null
+                || customerEntity.getPassword() == null
+                || customerEntity.getContactNumber() == null) {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
         }
         validateCustomerData(customerEntity);
