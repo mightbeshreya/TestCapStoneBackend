@@ -42,7 +42,7 @@ public class RestaurantController {
 
     @Autowired
     CustomerService customerService;
-
+/*
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getAllRestaurants() {
         List<RestaurantEntity> listOfRestaurants = restaurantBusinessService.getAllRestaurants();
@@ -257,6 +257,6 @@ public class RestaurantController {
                 .status("RESTAURANT RATING UPDATED SUCCESSFULLY");
         return new ResponseEntity<RestaurantUpdatedResponse>(restUpdateResponse, HttpStatus.OK);
     }
-
+*/
 }
 

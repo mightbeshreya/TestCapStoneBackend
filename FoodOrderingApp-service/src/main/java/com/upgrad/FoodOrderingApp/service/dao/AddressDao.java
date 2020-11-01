@@ -55,11 +55,10 @@ public class AddressDao {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public String deleteAddress(String address_uuid) {
+    public AddressEntity deleteAddress(AddressEntity addressEntity) {
         try {
-            AddressEntity addressEntity = getAddressByUUID(address_uuid);
             entityManager.remove(addressEntity);
-            return addressEntity.getUuid();
+            return addressEntity;
         } catch (NoResultException nre) {
             return null;
         }

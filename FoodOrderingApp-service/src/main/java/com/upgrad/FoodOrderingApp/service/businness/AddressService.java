@@ -4,10 +4,7 @@ import com.upgrad.FoodOrderingApp.service.dao.AddressDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerAddressDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.dao.StateDao;
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
-import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
@@ -110,42 +107,24 @@ public class AddressService {
 
     }
 
-    public String deleteAddress(String addressId, String authorization) throws AuthorizationFailedException, AddressNotFoundException {
-
-        //validate user
-        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorization);
-        AddressEntity addressEntity = addressDao.getAddressByUUID(addressId);
-        CustomerAddressEntity customerAddressEntity = customerAddressDao.getSingleAddress(addressEntity);
-
-        if (customerAuthTokenEntity.equals(null)) {
-            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
-        }
-        final ZonedDateTime customerSignOut = customerAuthTokenEntity.getLogoutAt();
-
-        if (customerSignOut != null && customerAuthTokenEntity != null) {
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
-        }
-        final ZonedDateTime customerSessionExpire = customerAuthTokenEntity.getExpiresAt();
-        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.systemDefault());
-        if (customerSessionExpire.compareTo(currentTime) < 0) {
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        }
-        if (addressEntity.getUuid().length() == 0){
-            throw new AddressNotFoundException("ANF-005", "Address id can not be empty");
-        }
-        if (addressEntity == null) {
-            throw new AddressNotFoundException("ANF-003", "No address by this id");
-        }
-        if (customerAuthTokenEntity.getCustomer().getId().equals(customerAddressEntity.getCustomer().getId())) {
-            return addressDao.deleteAddress(addressId);
-        } else {
-            throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
-        }
-
+    public AddressEntity deleteAddress(AddressEntity addressEntity)  {
+            return addressDao.deleteAddress(addressEntity);
     }
 
-    public AddressEntity getAddressById(String id) {
-        return addressDao.getAddressByUUID(id);
+    public AddressEntity getAddressByUUID(String addressUuid, CustomerEntity customerEntity)
+    throws AddressNotFoundException, AuthorizationFailedException{
+        if(addressUuid==null || addressUuid.isEmpty()){
+            throw new AddressNotFoundException("ANF-005", "Address id can not be empty");
+        }
+        AddressEntity addressEntity = addressDao.getAddressByUUID(addressUuid);
+        if(addressEntity == null ){
+            throw new AddressNotFoundException("ANF-003", "No address by this id");
+        }
+        CustomerAddressEntity customerAddressEntity = customerAddressDao.getSingleAddress(addressEntity);
+        if(!customerEntity.getId().equals(customerAddressEntity.getCustomer().getId())) {
+            throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
+        }
+        return addressEntity;
     }
 
 }
