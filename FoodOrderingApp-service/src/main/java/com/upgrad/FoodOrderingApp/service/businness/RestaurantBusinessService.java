@@ -1,15 +1,11 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 
-import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
-import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -71,7 +66,7 @@ public class RestaurantBusinessService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public RestaurantEntity updateRestaurantDetails(RestaurantEntity restaurantEntity, String authorization) throws RestaurantNotFoundException,InvalidRatingException,AuthorizationFailedException {
-        CustomerAuthTokenEntity userAuthToken = restaurantDao.getUserAuthToken(authorization);
+        CustomerAuthEntity userAuthToken = restaurantDao.getUserAuthToken(authorization);
         RestaurantEntity existingRestaurantEntity =  restaurantDao.getRestaurantByUuid(restaurantEntity.getUuid());
         if(userAuthToken == null) {
             throw new AuthorizationFailedException("ATHR-001","Customer is not Logged in.");

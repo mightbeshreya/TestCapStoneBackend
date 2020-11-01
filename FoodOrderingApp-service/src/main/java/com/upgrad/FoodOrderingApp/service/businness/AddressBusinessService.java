@@ -5,12 +5,11 @@ import com.upgrad.FoodOrderingApp.service.dao.CustomerAddressDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SaveAddressException;
-import jdk.nashorn.internal.ir.IfNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -47,7 +46,7 @@ public class AddressBusinessService {
         if (getStateByUuid(addressEntity.getUuid()) == null) {
             throw new SaveAddressException("ANF-002", "No state by this id");
         }
-        CustomerAuthTokenEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorizationToken);
+        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorizationToken);
 
         if (customerAuthTokenEntity.equals(null)) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
@@ -82,7 +81,7 @@ public class AddressBusinessService {
     @Transactional(propagation = Propagation.REQUIRED)
     public List<CustomerAddressEntity> getAddressByCustomer(final String authorizationToken) throws AuthorizationFailedException {
 
-        CustomerAuthTokenEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
+        CustomerAuthEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
 
         if (customerAuth.equals(null)) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
@@ -109,7 +108,7 @@ public class AddressBusinessService {
     public String deleteAddress(String addressId, String authorization) throws AuthorizationFailedException, AddressNotFoundException {
 
         //validate user
-        CustomerAuthTokenEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorization);
+        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorization);
         AddressEntity addressEntity = addressDao.getAddressByUuid(addressId);
         CustomerAddressEntity customerAddressEntity = customerAddressDao.getSingleAddress(addressEntity);
 

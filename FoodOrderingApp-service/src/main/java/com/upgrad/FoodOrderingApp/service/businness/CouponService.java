@@ -3,7 +3,7 @@ package com.upgrad.FoodOrderingApp.service.businness;
 import com.upgrad.FoodOrderingApp.service.dao.CouponDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CouponNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZonedDateTime;
 
 @Service
-public class CouponBusinessService {
+public class CouponService {
     @Autowired
     private CouponDao couponDao;
 
@@ -24,7 +24,7 @@ public class CouponBusinessService {
     @Transactional(propagation = Propagation.REQUIRED)
     public CouponEntity getCouponByName(final String accessToken, final String couponName) throws AuthorizationFailedException,
             CouponNotFoundException {
-        CustomerAuthTokenEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
+        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
         if(customerAuthTokenEntity == null) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
         }

@@ -52,7 +52,7 @@ public class AddressController {
         addressEntity.setActive(1);
 
         final AddressEntity createdAddress = addressBusinessService.saveAddress(addressEntity, bearerToken[1], saveAddressRequest.getStateUuid());
-        final CustomerAuthTokenEntity customerAuthTokenEntity = customerService.getCustomer(bearerToken[1]);
+        final CustomerAuthEntity customerAuthTokenEntity = customerService.getCustomer(bearerToken[1]);
 
         final CustomerAddressEntity customerAddressEntity = new CustomerAddressEntity();
         customerAddressEntity.setAddress(createdAddress);

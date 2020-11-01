@@ -1,11 +1,11 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.businness.CouponBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.CouponService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
-import com.upgrad.FoodOrderingApp.service.businness.OrderBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.OrderService;
 import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
 import com.upgrad.FoodOrderingApp.service.exception.*;
@@ -27,10 +27,10 @@ import java.util.UUID;
 @CrossOrigin
 public class OrderController {
     @Autowired
-    private CouponBusinessService couponBusinessService;
+    private CouponService couponBusinessService;
 
     @Autowired
-    private OrderBusinessService orderBusinessService;
+    private OrderService orderBusinessService;
 
     @Autowired
     private CustomerService customerService;
@@ -59,7 +59,7 @@ public class OrderController {
 
         String accessToken = authorization.split("Bearer ")[1];
 
-        CustomerAuthTokenEntity customerEntity = customerService.getCustomer(accessToken);
+        CustomerAuthEntity customerEntity = customerService.getCustomer(accessToken);
 
         if (accessToken.equals(null)) {
             throw new AuthenticationFailedException("ATHR-001", "Customer is not Logged in.");

@@ -2,7 +2,7 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.*;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthTokenEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
@@ -24,9 +24,6 @@ import java.util.UUID;
 public class CustomerController {
     @Autowired
     CustomerService customerService;
-
-    @Autowired
-    LoginBusinessService loginBusinessService;
 
     @Autowired
     LogoutBusinessService logoutBusinessService;
@@ -67,7 +64,7 @@ public class CustomerController {
         }
         String[] decodedArray = decodedText.split(":");
 
-        CustomerAuthTokenEntity customerAuthTokenEntity = loginBusinessService.authentication(decodedArray[0], decodedArray[1]);
+        CustomerAuthEntity customerAuthTokenEntity = customerService.authenticate(decodedArray[0], decodedArray[1]);
         CustomerEntity customerEntity = customerAuthTokenEntity.getCustomer();
         LoginResponse loginResponse = new LoginResponse().id(customerEntity.getUuid()).message("LOGGED IN SUCCESSFULLY");
         HttpHeaders headers = new HttpHeaders();

@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 @Service
-public class OrderBusinessService {
+public class OrderService {
 
     @Autowired
     private OrderDao orderDao;
@@ -26,25 +26,25 @@ public class OrderBusinessService {
     private CustomerDao customerDao;
 
     @Autowired
-    private OrderItemDao orderItemDao;
+    OrderItemDao orderItemDao;
 
     @Autowired
-    private CouponDao couponDao;
+    CouponDao couponDao;
 
     @Autowired
-    private AddressDao addressDao;
+    AddressDao addressDao;
 
     @Autowired
-    private PaymentDao paymentDao;
+    PaymentDao paymentDao;
 
     @Autowired
-    private ItemDao itemDao;
+    ItemDao itemDao;
 
     @Autowired
-    private RestaurantDao restaurantDao;
+    RestaurantDao restaurantDao;
 
     @Autowired
-    private CustomerAddressDao customerAddressDao;
+    CustomerAddressDao customerAddressDao;
 
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -68,7 +68,7 @@ public class OrderBusinessService {
             throws AuthorizationFailedException, CouponNotFoundException ,
             AddressNotFoundException, PaymentMethodNotFoundException,
             RestaurantNotFoundException, ItemNotFoundException{
-        CustomerAuthTokenEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
+        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
         if (customerAuthTokenEntity == null) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
         }
