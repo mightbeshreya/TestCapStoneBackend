@@ -1,4 +1,4 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -182,7 +182,7 @@ public class AddressControllerTest {
         verify(mockAddressService, times(1)).getStateByUUID("testUUID");
         verify(mockAddressService, times(1)).saveAddress(any(), any());
     }
-
+/*
 
     // ------------------------------------------ DELETE /address/{address_id} ------------------------------------------
 
@@ -433,4 +433,5 @@ public class AddressControllerTest {
         final StatesListResponse statesLists = new ObjectMapper().readValue(response, StatesListResponse.class);
         assertNull(statesLists.getStates());
     }
-}*/
+    */
+}

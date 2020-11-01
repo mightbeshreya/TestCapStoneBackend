@@ -35,7 +35,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(SaveAddressException.class)
     public ResponseEntity<ErrorResponse> resourceNotFoundException(SaveAddressException exe, WebRequest webRequest) {
         return new ResponseEntity<ErrorResponse>(
-                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.FORBIDDEN
+                new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()), HttpStatus.BAD_REQUEST
         );
     }
 

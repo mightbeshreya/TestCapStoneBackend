@@ -1,7 +1,8 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
-import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.businness.AddressBusinessService;
+import com.upgrad.FoodOrderingApp.api.model.SaveAddressRequest;
+import com.upgrad.FoodOrderingApp.api.model.SaveAddressResponse;
+import com.upgrad.FoodOrderingApp.service.businness.AddressService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.StateBusinessService;
 import com.upgrad.FoodOrderingApp.service.entity.*;
@@ -14,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,7 +25,7 @@ public class AddressController {
     @Autowired
     CustomerService customerService;
     @Autowired
-    AddressBusinessService addressBusinessService;
+    AddressService addressService;
 
     @Autowired
     StateBusinessService stateBusinessService;
@@ -35,13 +34,15 @@ public class AddressController {
     /* The method handles Address save Related request.It takes the details as per in the SaveAddressRequest
      & produces response in SaveAddressResponse and returns UUID of newly Created Customer Address and Success message else Return error code and error Message.
       */
-    /*
+
     @RequestMapping(method = RequestMethod.POST, path = "/address", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SaveAddressResponse> saveAddress(final SaveAddressRequest saveAddressRequest, @RequestHeader("authorization") final String authorization)
+    public ResponseEntity<SaveAddressResponse> saveAddress(@RequestBody(required = false) final SaveAddressRequest saveAddressRequest, @RequestHeader("authorization") final String authorization)
             throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
 
         //Access the accessToken from the request Header
-        String[] bearerToken = authorization.split("Bearer ");
+        String[] authorizationData = authorization.split("Bearer ");
+        String userAccessToken = authorizationData[1];
+        CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
 
         //Creating addressEntity from SaveAddressRequest data.
         AddressEntity addressEntity = new AddressEntity();
@@ -52,18 +53,21 @@ public class AddressController {
         addressEntity.setPincode(saveAddressRequest.getPincode());
         addressEntity.setUuid(UUID.randomUUID().toString());
         addressEntity.setActive(1);
+        System.out.println("saveAddressRequest state ID : "+saveAddressRequest.getStateUuid());
+        StateEntity state = addressService.getStateByUUID(saveAddressRequest.getStateUuid());
+        //addressEntity.setState_id(state);
 
-        final AddressEntity createdAddress = addressBusinessService.saveAddress(addressEntity, bearerToken[1], saveAddressRequest.getStateUuid());
-        final CustomerAuthEntity customerAuthTokenEntity = customerService.getCustomer(bearerToken[1]);
+        final AddressEntity createdAddress = addressService.saveAddress(addressEntity, state);
+        /*final CustomerAuthEntity customerAuthTokenEntity = customerService.getCustomer(userAccessToken);
 
         final CustomerAddressEntity customerAddressEntity = new CustomerAddressEntity();
         customerAddressEntity.setAddress(createdAddress);
         customerAddressEntity.setCustomer(customerAuthTokenEntity.getCustomer());
-        addressBusinessService.saveCustomerAddress(customerAddressEntity);
+        addressBusinessService.saveCustomerAddress(customerAddressEntity); */
 
         //Creating SaveAddressResponse response
         final SaveAddressResponse saveAddressResponse = new SaveAddressResponse().id(createdAddress.getUuid()).status("ADDRESS SUCCESSFULLY REGISTERED");
-        return new ResponseEntity<SaveAddressResponse>(saveAddressResponse, HttpStatus.OK);
+        return new ResponseEntity<SaveAddressResponse>(saveAddressResponse, HttpStatus.CREATED);
     }
 
     /*  The method handles get all Address  request.It takes the authorization
