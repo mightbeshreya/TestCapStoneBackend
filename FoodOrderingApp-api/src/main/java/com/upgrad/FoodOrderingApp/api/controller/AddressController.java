@@ -31,9 +31,11 @@ public class AddressController {
     @Autowired
     StateBusinessService stateBusinessService;
 
+
     /* The method handles Address save Related request.It takes the details as per in the SaveAddressRequest
      & produces response in SaveAddressResponse and returns UUID of newly Created Customer Address and Success message else Return error code and error Message.
       */
+    /*
     @RequestMapping(method = RequestMethod.POST, path = "/address", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SaveAddressResponse> saveAddress(final SaveAddressRequest saveAddressRequest, @RequestHeader("authorization") final String authorization)
             throws AuthorizationFailedException, SaveAddressException, AddressNotFoundException {
@@ -67,6 +69,7 @@ public class AddressController {
     /*  The method handles get all Address  request.It takes the authorization
          & produces response in AddressListResponse and returns list of Customer Address .If error Return error code and error Message.
           */
+    /*
     @RequestMapping(method = RequestMethod.GET, path = "/address/customer", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AddressListResponse>> getAllSavedAddress(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
 
@@ -90,6 +93,7 @@ public class AddressController {
     /*  The method handles delete  Address  request.It takes the authorization and path variables address UUID
   & produces response in DeleteAddressResponse and returns UUID of deleted address and Successfull message .If error Return error code and error Message.
    */
+    /*
     @RequestMapping(method = RequestMethod.DELETE, path = "/address/{address_id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<DeleteAddressResponse> deleteSavedAddress(@RequestHeader("authorization") final String authorization, @PathVariable(value = "address_id") final String addressUuid) throws AuthorizationFailedException, AddressNotFoundException {
 
@@ -104,6 +108,7 @@ public class AddressController {
 
     /*  The method handles States request.It produces response in StatesListResponse and returns UUID & stateName .If error Return error code and error Message.
      */
+    /*
     @RequestMapping(method = RequestMethod.GET, path = "/states", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<StatesListResponse>> getAllStates() {
         List<StateEntity> stateEntities = stateBusinessService.getAllStates();
@@ -117,4 +122,5 @@ public class AddressController {
         }
         return  new ResponseEntity<List<StatesListResponse>>(states, HttpStatus.OK);
     }
+    */
 }
