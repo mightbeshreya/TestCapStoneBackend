@@ -129,13 +129,19 @@ public class CustomerController {
      */
 
     @RequestMapping(method = RequestMethod.PUT, path = "/customer/password", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String accessToken, @RequestBody(required = false) UpdatePasswordRequest updatePasswordRequest ) throws AuthorizationFailedException, UpdateCustomerException{
-        String[] authorizedData = accessToken.split(" ");
-        String userAccessToken = authorizedData[1];
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization, @RequestBody(required = false) UpdatePasswordRequest updatePasswordRequest ) throws AuthorizationFailedException, UpdateCustomerException{
+        if(updatePasswordRequest.getNewPassword().isEmpty() || updatePasswordRequest.getOldPassword().isEmpty()) {
+            throw new UpdateCustomerException("UCR-003", "No field should be empty");
+        }
+
+        String[] authorizationData = authorization.split("Bearer ");
+        String userAccessToken = authorizationData[1];
+        CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
+
         String newPassword = updatePasswordRequest.getNewPassword();
         String oldPassword = updatePasswordRequest.getOldPassword();
-        CustomerEntity customerEntity = updatePasswordBusinessService.updatedPassword(userAccessToken, newPassword, oldPassword);
-        UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(customerEntity.getUuid())
+        CustomerEntity updatedCustomerEntity = customerService.updateCustomerPassword(oldPassword, newPassword, customerEntity);
+        UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(updatedCustomerEntity.getUuid())
                 .status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
         return new ResponseEntity<UpdatePasswordResponse>(updatePasswordResponse, HttpStatus.OK);
     }

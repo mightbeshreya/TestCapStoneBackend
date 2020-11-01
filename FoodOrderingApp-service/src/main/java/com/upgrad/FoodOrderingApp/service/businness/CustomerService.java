@@ -199,5 +199,55 @@ public class CustomerService {
         CustomerEntity updatedCustomer = customerDao.updateCustomerDetails(customerEntity);
         return updatedCustomer;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CustomerEntity updateCustomerPassword(String oldPassword, String updatePassword, CustomerEntity customerEntity)
+            throws AuthorizationFailedException, UpdateCustomerException {
+
+        /*CustomerAuthEntity customerAuthToken = customerDao.checkAuthToken(accessToken);
+        CustomerEntity updatedCustomerPassword = customerAuthToken.getCustomer();
+        ZonedDateTime current = ZonedDateTime.now();
+
+        if (updatePassword == null || oldPassword == null){
+            throw new UpdateCustomerException("UCR-003", "No field should be empty");
+        }
+        if (customerAuthToken == null){
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        }
+        if (customerAuthToken.getLogoutAt() != null){
+            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        }
+        if (customerAuthToken.getExpiresAt().isBefore(current)){
+            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        }*/
+        if(!checkForPasswordStrength(updatePassword)) {
+            throw new UpdateCustomerException("UCR-001", "Weak password!");
+        }
+        final String encryptedPassword = passwordCryptographyProvider.encrypt(oldPassword, customerEntity.getSalt());
+        if(!encryptedPassword.equals(customerEntity.getPassword())) {
+
+            throw new UpdateCustomerException("UCR-004", "Incorrect old password!");
+        }
+        /*
+        oldPassword = passwordCryptographyProvider.encrypt(oldPassword, customerAuthToken.getCustomer().getSalt());
+
+        if (!oldPassword.equals(customerAuthToken.getCustomer().getPassword())){
+            throw new UpdateCustomerException("UCR-001", "Weak password!");
+        } */
+        String[] encryptedText = passwordCryptographyProvider.encrypt(updatePassword);
+        customerEntity.setSalt(encryptedText[0]);
+        customerEntity.setPassword(encryptedText[1]);
+        CustomerEntity updatedPaswordCustomer = customerDao.updatePassword(customerEntity);
+        return updatedPaswordCustomer;
+    }
+    private boolean checkForPasswordStrength (String pass) {
+        String regex = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        if (pass == null) {
+            return false;
+        }
+        Matcher m = pattern.matcher(pass);
+        return m.matches();
+    }
 }
 
