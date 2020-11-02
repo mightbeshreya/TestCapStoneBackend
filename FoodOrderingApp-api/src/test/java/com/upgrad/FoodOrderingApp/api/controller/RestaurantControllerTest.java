@@ -1,4 +1,4 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -430,7 +430,7 @@ public class RestaurantControllerTest {
                 .updateRestaurantRating(restaurantEntity, 5.5);
     }
 */
-/*
+
     // ------------------------------------------ POJO builders ------------------------------------------
 
     private ItemEntity getItemEntity() {
@@ -470,4 +470,4 @@ public class RestaurantControllerTest {
     }
 
 }
-*/
+
