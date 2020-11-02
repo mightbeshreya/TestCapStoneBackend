@@ -57,7 +57,7 @@ public class OrderControllerTest {
 
     @MockBean
     private ItemService mockItemService;
-/*
+
     // ------------------------------------------ POST /order ------------------------------------------
 
     //This test case passes when you are able to save order successfully.
@@ -351,7 +351,7 @@ public class OrderControllerTest {
         verify(mockOrderService, times(0)).saveOrder(any());
         verify(mockOrderService, times(0)).saveOrderItem(any());
     }
-*/
+
     // ------------------------------------------ GET /order ------------------------------------------
 
     //This test case passes when you are able to retrieve all past orders placed by you

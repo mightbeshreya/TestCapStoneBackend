@@ -2,6 +2,7 @@ package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
+import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
 
@@ -34,11 +35,20 @@ public class OrderDao {
         }
     }
 
-    public OrderEntity saveORDER(OrderEntity orderEntity) {
+    public OrderEntity saveOrder(OrderEntity orderEntity) {
         try {
             entityManager.persist(orderEntity);
             return orderEntity;
         }catch (Exception e) {
+            return null;
+        }
+    }
+
+    public OrderItemEntity saveOrderItem(OrderItemEntity orderedItem) {
+        try {
+            entityManager.persist(orderedItem);
+            return orderedItem;
+        }catch(Exception e) {
             return null;
         }
     }

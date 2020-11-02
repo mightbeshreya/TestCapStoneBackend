@@ -62,6 +62,11 @@ public class OrderService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
+    public OrderEntity saveOrder(OrderEntity orderEntity) {
+        return orderDao.saveOrder(orderEntity);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public OrderEntity saveOrderList(final String accessToken, final String couponUuid,
                                      final String addressUuid, final String paymentUuid, final String restaurantUuid,
                                      final String itemUuid, final BigDecimal bill)
@@ -120,8 +125,24 @@ public class OrderService {
         Timestamp instant= Timestamp.from(Instant.now());
         orderEntity.setDate(instant);
 
-        OrderEntity savedOrderEntity = orderDao.saveORDER(orderEntity);
+        OrderEntity savedOrderEntity = orderDao.saveOrder(orderEntity);
         return savedOrderEntity;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public OrderItemEntity saveOrderItem(OrderItemEntity orderedItem) {
+        return orderDao.saveOrderItem(orderedItem);
+    }
+
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CouponEntity getCouponByCouponId(final String couponUuid) throws CouponNotFoundException{
+        CouponEntity couponEntity = couponDao.getCouponByUUID(couponUuid);
+        if(couponEntity == null) {
+            throw new CouponNotFoundException("CPF-002", "No coupon by this id");
+        }
+        return couponEntity;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

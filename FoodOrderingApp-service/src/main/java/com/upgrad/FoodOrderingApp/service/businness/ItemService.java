@@ -2,9 +2,12 @@ package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.dao.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
+import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -86,5 +89,14 @@ public class ItemService {
             });
         });
         return itemEntities;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public ItemEntity getItemByUuid(final String itemUuid) throws ItemNotFoundException {
+        ItemEntity itemEntity = itemDao.getItemByUuid(itemUuid);
+        if(itemEntity == null ) {
+            throw new ItemNotFoundException("INF-003", "No item by this id exist");
+        }
+        return itemEntity;
     }
 }
