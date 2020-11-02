@@ -30,6 +30,16 @@ public class RestaurantService {
         return restaurantDao.getAllRestaurants();
     }
 
+    public List<RestaurantEntity> restaurantsByName(String restaurantName) throws RestaurantNotFoundException {
+
+        if (restaurantName == null || restaurantName == "") {
+            throw new RestaurantNotFoundException("RNF-003", "Restaurant name field should not be empty");
+        }
+
+        List<RestaurantEntity> restaurantEntities = restaurantDao.restaurantsByName(restaurantName);
+        return restaurantEntities;
+    }
+
     public List<RestaurantEntity> restaurantByName(String restaurantName) throws RestaurantNotFoundException {
 
         if (restaurantName == null || restaurantName == "") {

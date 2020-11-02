@@ -34,6 +34,16 @@ public class RestaurantDao {
         }
     }
 
+    public List<RestaurantEntity> restaurantsByName(String restaurantName) {
+        try {
+            String restaurantNameLow = "%" + restaurantName.toLowerCase() + "%";
+            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurantByName", RestaurantEntity.class).setParameter("restaurant_name_lower", restaurantNameLow).getResultList();
+            return restaurantEntities;
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
     public List<RestaurantEntity> restaurantByName(String restaurantName) {
         try {
             String restaurantNameLow = "%" + restaurantName.toLowerCase() + "%";

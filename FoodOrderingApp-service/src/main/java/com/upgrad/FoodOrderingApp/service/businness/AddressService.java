@@ -138,4 +138,8 @@ public class AddressService {
         List<StateEntity> allStates = stateDao.getAllStates();
         return allStates;
     }
+
+    public AddressEntity getAddressById(String id) {
+        return addressDao.getAddressByUUID(id);
+    }
 }

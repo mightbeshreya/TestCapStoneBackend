@@ -34,6 +34,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.junit.Assert.assertEquals;
+
 // This class contains all the test cases regarding the restaurant controller
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -115,7 +117,7 @@ public class RestaurantControllerTest {
         verify(mockItemService, times(0)).getItemsByCategoryAndRestaurant(anyString(), anyString());
     }
 
-/*
+
     // ------------------------------------------ GET /restaurant/name/{restaurant_name} ------------------------------------------
 
     //This test case passes when you are able to fetch restaurants by the name you provided.
@@ -160,7 +162,7 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1)).restaurantsByName(anyString());
     }
 
-
+/*
     // ------------------------------------------ GET /restaurant/category/{category_id} ------------------------------------------
 
     //This test case passes when you are able to retrieve restaurant belonging to any particular categories.
