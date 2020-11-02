@@ -43,7 +43,7 @@ public class RestaurantEntity implements Serializable {
 
     @Column(name = "customer_rating")
     @NotNull
-    private BigDecimal customerRating;
+    private Double customerRating;
 
     @Column(name = "average_price_for_two")
     @NotNull
@@ -107,11 +107,11 @@ public class RestaurantEntity implements Serializable {
         this.photoUrl = photoUrl;
     }
 
-    public BigDecimal getCustomerRating() {
+    public Double getCustomerRating() {
         return customerRating;
     }
 
-    public void setCustomerRating(BigDecimal customerRating) {
+    public void setCustomerRating(Double customerRating) {
         this.customerRating = customerRating;
     }
 
@@ -119,7 +119,7 @@ public class RestaurantEntity implements Serializable {
         return numOfCustomersRated;
     }
 
-    public void setNumOfCustomersRated(Integer numOfCustomersRated) {
+    public void setNumberCustomersRated(Integer numOfCustomersRated) {
         this.numOfCustomersRated = numOfCustomersRated;
     }
 
@@ -127,7 +127,7 @@ public class RestaurantEntity implements Serializable {
         return avgPriceForTwo;
     }
 
-    public void setAvgPriceForTwo(Integer avgPriceForTwo) {
+    public void setAvgPrice(Integer avgPriceForTwo) {
         this.avgPriceForTwo = avgPriceForTwo;
     }
 

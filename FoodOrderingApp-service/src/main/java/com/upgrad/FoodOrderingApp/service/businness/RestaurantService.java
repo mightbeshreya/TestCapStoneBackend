@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
-public class RestaurantBusinessService {
+public class RestaurantService {
     @Autowired
     private RestaurantDao restaurantDao;
 
@@ -40,8 +40,8 @@ public class RestaurantBusinessService {
         return restaurantEntities;
     }
 
-    public RestaurantEntity restaurantByUuid(String uuid) throws RestaurantNotFoundException {
-        if (uuid == null || uuid == "") {
+    public RestaurantEntity restaurantByUUID(String uuid) throws RestaurantNotFoundException {
+        if (uuid == null || uuid == "" || uuid.isEmpty()) {
             throw new RestaurantNotFoundException("RNF-002", "Restaurant id field should not be empty");
         }
         RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(uuid);
@@ -63,7 +63,7 @@ public class RestaurantBusinessService {
         return restaurantEntities;
 }*/
     }
-
+/*
     @Transactional(propagation = Propagation.REQUIRED)
     public RestaurantEntity updateRestaurantDetails(RestaurantEntity restaurantEntity, String authorization) throws RestaurantNotFoundException,InvalidRatingException,AuthorizationFailedException {
         CustomerAuthEntity userAuthToken = restaurantDao.getUserAuthToken(authorization);
@@ -83,15 +83,15 @@ public class RestaurantBusinessService {
         }
         int numOfCustomersRated = existingRestaurantEntity.getNumOfCustomersRated() + 1;
         BigDecimal avgCustRating = existingRestaurantEntity.getCustomerRating().add(restaurantEntity.getCustomerRating()).divide(new BigDecimal(2));
-        restaurantEntity.setCustomerRating(avgCustRating);
-        restaurantEntity.setNumOfCustomersRated(numOfCustomersRated);
+        restaurantEntity.setCustomerRating(avgCustRating.doubleValue());
+        restaurantEntity.setNumberCustomersRated(numOfCustomersRated);
         restaurantEntity.setAddress(existingRestaurantEntity.getAddress());
-        restaurantEntity.setAvgPriceForTwo(existingRestaurantEntity.getAvgPriceForTwo());
+        restaurantEntity.setAvgPrice(existingRestaurantEntity.getAvgPriceForTwo());
         restaurantEntity.setId(existingRestaurantEntity.getId());
         restaurantEntity.setPhotoUrl(existingRestaurantEntity.getPhotoUrl());
         restaurantEntity.setCategories(existingRestaurantEntity.getCategories());
         restaurantEntity.setRestaurantName(existingRestaurantEntity.getRestaurantName());
         return restaurantDao.updateRestaurantDetails(restaurantEntity);
     }
-
+*/
 }

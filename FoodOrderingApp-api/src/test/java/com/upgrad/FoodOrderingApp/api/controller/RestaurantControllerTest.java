@@ -8,6 +8,7 @@ import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
@@ -114,6 +115,7 @@ public class RestaurantControllerTest {
         verify(mockItemService, times(0)).getItemsByCategoryAndRestaurant(anyString(), anyString());
     }
 
+/*
     // ------------------------------------------ GET /restaurant/name/{restaurant_name} ------------------------------------------
 
     //This test case passes when you are able to fetch restaurants by the name you provided.
@@ -427,7 +429,8 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1))
                 .updateRestaurantRating(restaurantEntity, 5.5);
     }
-
+*/
+/*
     // ------------------------------------------ POJO builders ------------------------------------------
 
     private ItemEntity getItemEntity() {
@@ -465,4 +468,6 @@ public class RestaurantControllerTest {
         restaurantEntity.setRestaurantName("Famous Restaurant");
         return restaurantEntity;
     }
-}*/
+
+}
+*/

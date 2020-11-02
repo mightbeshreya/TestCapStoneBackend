@@ -43,6 +43,23 @@ public class AddressEntity {
     @Column(name = "active")
     private Integer active;
 
+    public AddressEntity(
+            String uuid,
+            String flatBuilNo,
+            String locality,
+            String city,
+            String pincode,
+            StateEntity state) {
+        this.uuid = uuid;
+        this.flat_buil_number = flatBuilNo;
+        this.locality = locality;
+        this.city = city;
+        this.pincode = pincode;
+        this.state_id = state;
+    }
+
+    public AddressEntity() {}
+
     public Integer getId() {
         return id;
     }

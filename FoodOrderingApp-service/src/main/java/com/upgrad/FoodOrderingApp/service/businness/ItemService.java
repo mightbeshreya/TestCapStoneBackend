@@ -1,22 +1,14 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
-import com.upgrad.FoodOrderingApp.service.dao.ItemDao;
-import com.upgrad.FoodOrderingApp.service.dao.OrderDao;
-import com.upgrad.FoodOrderingApp.service.dao.OrderItemDao;
-import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
+import com.upgrad.FoodOrderingApp.service.dao.*;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RelationServiceNotRegisteredException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ItemService {
@@ -29,6 +21,15 @@ public class ItemService {
 
     @Autowired
     private OrderItemDao orderItemDao;
+
+    @Autowired
+    CategoryDao categoryDao;
+
+    @Autowired
+    RestaurantDao restaurantDao;
+
+    @Autowired
+    RestaurantItemDao restaurantItemDao;
 
     public List<ItemEntity> getItemsByPopularity(RestaurantEntity restaurantEntity) throws RestaurantNotFoundException {
 
@@ -66,4 +67,26 @@ public class ItemService {
         return sortedItemEntites;
     }
 
+    public List<ItemEntity> getItemsByCategoryAndRestaurant(String restaurantUuid, String categoryUuid) {
+
+        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
+
+        //Set<ItemEntity> restaurantItems = restaurantEntity.getItems();
+
+        CategoryEntity categoryEntity = categoryDao.getCategoryByUuid(categoryUuid);
+
+        List<RestaurantItemEntity> restaurantItemEntities = restaurantItemDao.getItemByRestaurant(restaurantEntity);
+
+        List<CategoryItemEntity> categoryItemEntities = categoryDao.getItemByCategory(categoryEntity);
+
+        List<ItemEntity> itemEntities = new LinkedList<>();
+        restaurantItemEntities.forEach(restaurantItemEntity -> {
+            categoryItemEntities.forEach(categoryItemEntity -> {
+                if (restaurantItemEntity.getItem().equals(categoryItemEntity.getItem())) {
+                    itemEntities.add(restaurantItemEntity.getItem());
+                }
+            });
+        });
+        return itemEntities;
+    }
 }

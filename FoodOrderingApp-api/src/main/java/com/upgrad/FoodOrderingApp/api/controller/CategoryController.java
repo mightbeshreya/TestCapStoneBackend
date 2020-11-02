@@ -4,7 +4,7 @@ import com.upgrad.FoodOrderingApp.api.model.CategoriesListResponse;
 import com.upgrad.FoodOrderingApp.api.model.CategoryDetailsResponse;
 import com.upgrad.FoodOrderingApp.api.model.CategoryListResponse;
 import com.upgrad.FoodOrderingApp.api.model.ItemList;
-import com.upgrad.FoodOrderingApp.service.businness.CategoryBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
@@ -24,11 +24,11 @@ import java.util.UUID;
 public class CategoryController {
 
     @Autowired
-    private CategoryBusinessService categoryBusinessService;
+    private CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/category", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CategoriesListResponse> getAllCategories() {
-        List<CategoryEntity> categoryEntities = categoryBusinessService.getAllCategoriesOrderedByName();
+        List<CategoryEntity> categoryEntities = categoryService.getAllCategoriesOrderedByName();
 
         if (!categoryEntities.isEmpty()) {
             List<CategoryListResponse> categoryListResponses = new LinkedList<>();
@@ -48,7 +48,7 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.GET, path = "/category/{category_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CategoryDetailsResponse> getCategoryById(@PathVariable(value = "category_id") final String categoryUuid) throws CategoryNotFoundException {
 
-        CategoryEntity categoryEntity = categoryBusinessService.getCategoryById(categoryUuid);
+        CategoryEntity categoryEntity = categoryService.getCategoryById(categoryUuid);
 
         List<ItemEntity> itemEntities = categoryEntity.getItems();
 
