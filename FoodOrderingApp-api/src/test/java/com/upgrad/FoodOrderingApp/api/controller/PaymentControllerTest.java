@@ -1,4 +1,4 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +21,8 @@ import java.util.UUID;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.junit.Assert.assertEquals;
 
 // This class contains all the test cases regarding the payment controller
 @RunWith(SpringRunner.class)
@@ -57,4 +59,4 @@ public class PaymentControllerTest {
         verify(mockPaymentService, times(1)).getAllPaymentMethods();
     }
 
-}*/
+}
