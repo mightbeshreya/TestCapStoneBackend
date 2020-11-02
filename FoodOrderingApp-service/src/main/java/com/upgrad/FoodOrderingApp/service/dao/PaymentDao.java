@@ -8,11 +8,15 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+//This Class is created to access DB with respect to Payment entity
+
 @Repository
 public class PaymentDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    
+    //To get Payment Methods from the db
     public List<PaymentEntity> getPaymentMethods() {
         try {
             return entityManager.createNamedQuery("getAllPaymentMethods", PaymentEntity.class)
@@ -21,6 +25,9 @@ public class PaymentDao {
             return null;
         }
     }
+    
+    
+    //To get Payment By UUID from the db
     public PaymentEntity getPaymentMethodByUUID(final String paymentUuid) {
         try {
             return entityManager.createNamedQuery("getPaymentMethodByUuid", PaymentEntity.class)
