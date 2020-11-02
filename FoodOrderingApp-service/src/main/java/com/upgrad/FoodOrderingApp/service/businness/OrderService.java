@@ -123,5 +123,29 @@ public class OrderService {
         OrdersEntity savedOrderEntity = orderDao.saveORDER(ordersEntity);
         return savedOrderEntity;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CouponEntity getCouponByCouponName(final String couponName) throws AuthorizationFailedException,
+            CouponNotFoundException {
+        /*CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
+        if(customerAuthTokenEntity == null) {
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
+        }
+        if(customerAuthTokenEntity.getLogoutAt()!=null) {
+            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
+        }
+        final ZonedDateTime now = ZonedDateTime.now();
+        if(customerAuthTokenEntity.getExpiresAt().isBefore(now) || customerAuthTokenEntity.getExpiresAt().isEqual(now)){
+            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        } */
+        if(couponName == null || couponName == "" || couponName.isEmpty()) {
+            throw new CouponNotFoundException("CPF-002", "Coupon name field should not be empty");
+        }
+        CouponEntity couponEntity = couponDao.getCouponByName(couponName);
+        if(couponEntity == null){
+            throw new CouponNotFoundException("CPF-001", "No coupon by this name");
+        }
+        return couponEntity;
+    }
 }
 

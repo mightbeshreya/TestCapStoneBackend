@@ -4,10 +4,7 @@ import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.CouponService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.OrderService;
-import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +27,7 @@ public class OrderController {
     private CouponService couponBusinessService;
 
     @Autowired
-    private OrderService orderBusinessService;
+    private OrderService orderService;
 
     @Autowired
     private CustomerService customerService;
@@ -39,14 +36,19 @@ public class OrderController {
     public ResponseEntity<CouponDetailsResponse> getCouponByCouponName(@RequestHeader("authorization") final String authorization,
                            @PathVariable("coupon_name") final String couponName)
                             throws AuthorizationFailedException, CouponNotFoundException {
-        String[] authorizedData = authorization.split(" ");
+        /*String[] authorizedData = authorization.split(" ");
         String accessToken;
         try {
             accessToken = authorizedData[1];
         }catch (ArrayIndexOutOfBoundsException e) {
             accessToken = authorizedData[0];
-        }
-        CouponEntity couponEntity =  couponBusinessService.getCouponByName(accessToken, couponName);
+        } */
+
+        String[] authorizationData = authorization.split("Bearer ");
+        String userAccessToken = authorizationData[1];
+        CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
+
+        CouponEntity couponEntity =  orderService.getCouponByCouponName(couponName);
 
         CouponDetailsResponse couponDetailsResponse = new CouponDetailsResponse()
                 .id(UUID.fromString(couponEntity.getUuid())).couponName(couponEntity.getCouponName())
