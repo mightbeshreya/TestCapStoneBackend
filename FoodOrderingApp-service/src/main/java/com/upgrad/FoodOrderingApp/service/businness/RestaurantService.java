@@ -63,6 +63,24 @@ public class RestaurantService {
         return restaurantEntities;
 }*/
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurant, Double customerRating)
+            throws InvalidRatingException {
+        if (customerRating < 1.0 || customerRating > 5.0) {
+            throw new InvalidRatingException("IRE-001", "Restaurant should be in the range of 1 to 5");
+        }
+        // calculate new average rating.
+        Double newAverageRating =
+                ((restaurant.getCustomerRating()) * ((double) restaurant.getNumOfCustomersRated())
+                        + customerRating)
+                        / ((double) restaurant.getNumOfCustomersRated() + 1);
+        restaurant.setCustomerRating(newAverageRating);
+        restaurant.setNumberCustomersRated(
+                restaurant.getNumOfCustomersRated()
+                        + 1); // update the number of customers who gave rating
+        return restaurantDao.updateRestaurantRating(restaurant);
+    }
 /*
     @Transactional(propagation = Propagation.REQUIRED)
     public RestaurantEntity updateRestaurantDetails(RestaurantEntity restaurantEntity, String authorization) throws RestaurantNotFoundException,InvalidRatingException,AuthorizationFailedException {
