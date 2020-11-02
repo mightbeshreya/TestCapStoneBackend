@@ -90,7 +90,7 @@ public class AddressController {
         List<AddressList> addressesList = new ArrayList<>();
 
         for(AddressEntity addressEntity: sortedAddress) {
-            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getState_name());
+            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getStateName());
             AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
                     .flatBuildingName(addressEntity.getFlat_buil_number()).locality(addressEntity.getLocality())
                     .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);
@@ -101,7 +101,7 @@ public class AddressController {
 
         /*for (CustomerAddressEntity cae : customerAddressEntityList) {
             AddressEntity addressEntity = cae.getAddress();
-            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getState_name());
+            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getStateName());
             AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
                     .flatBuildingName(addressEntity.getFlat_buil_number()).locality(addressEntity.getLocality())
                     .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);
@@ -135,19 +135,25 @@ public class AddressController {
 
     /*  The method handles States request.It produces response in StatesListResponse and returns UUID & stateName .If error Return error code and error Message.
      */
-    /*
-    @RequestMapping(method = RequestMethod.GET, path = "/states", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<StatesListResponse>> getAllStates() {
-        List<StateEntity> stateEntities = stateBusinessService.getAllStates();
 
-        List<StatesListResponse> states = new ArrayList<>();
+    @RequestMapping(method = RequestMethod.GET, path = "/states", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<StatesListResponse> getAllStates() {
+        List<StateEntity> stateEntities = addressService.getAllStates();
+
+        if(stateEntities.isEmpty()) {
+            return  new ResponseEntity<StatesListResponse>(new StatesListResponse(), HttpStatus.OK);
+        }
+
+        List<StatesList> states = new ArrayList<>();
         for (StateEntity state : stateEntities) {
             UUID stateUuid = UUID.fromString(state.getUuid());
-            StatesList statesList = new StatesList().id(stateUuid).stateName(state.getState_name());
-            StatesListResponse statesListResponse = new StatesListResponse().addStatesItem(statesList);
-            states.add(statesListResponse);
+            StatesList statesList = new StatesList().id(stateUuid).stateName(state.getStateName());
+            //StatesListResponse statesListResponse = new StatesListResponse().addStatesItem(statesList);
+            states.add(statesList);
         }
-        return  new ResponseEntity<List<StatesListResponse>>(states, HttpStatus.OK);
+
+        StatesListResponse statesListResponse = new StatesListResponse().states(states);
+        return  new ResponseEntity<StatesListResponse>(statesListResponse, HttpStatus.OK);
     }
-    */
+
 }

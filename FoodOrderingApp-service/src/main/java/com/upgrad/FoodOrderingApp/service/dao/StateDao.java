@@ -18,8 +18,9 @@ public class StateDao {
 
     public List<StateEntity> getAllStates() {
         try {
-            Query query = entityManager.createNamedQuery("getStateByUUID");
-            return new ArrayList<StateEntity>(query.getResultList());
+            return entityManager.createNamedQuery("getAllStates", StateEntity.class).getResultList();
+            /*Query query = entityManager.createNamedQuery("getStateByUUID");
+            return new ArrayList<StateEntity>(query.getResultList()); */
         } catch (NoResultException nre) {
             return null;
         }

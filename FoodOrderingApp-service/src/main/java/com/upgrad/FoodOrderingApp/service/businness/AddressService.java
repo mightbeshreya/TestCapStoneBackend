@@ -134,4 +134,8 @@ public class AddressService {
         return addressEntity;
     }
 
+    public List<StateEntity> getAllStates(){
+        List<StateEntity> allStates = stateDao.getAllStates();
+        return allStates;
+    }
 }

@@ -398,7 +398,7 @@ public class AddressControllerTest {
         verify(mockCustomerService, times(1)).getCustomer("database_accesstoken1");
         verify(mockAddressService, times(0)).getAllAddress(any());
     }
-/*
+
     // ------------------------------------------ GET /states ------------------------------------------
 
     //This test case passes when you are able to fetch the list of all available states.
@@ -434,5 +434,5 @@ public class AddressControllerTest {
         final StatesListResponse statesLists = new ObjectMapper().readValue(response, StatesListResponse.class);
         assertNull(statesLists.getStates());
     }
-    */
+
 }

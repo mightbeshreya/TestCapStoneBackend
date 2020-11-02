@@ -71,7 +71,7 @@ public class RestaurantController {
 
             RestaurantDetailsResponseAddressState responseAddressState = new RestaurantDetailsResponseAddressState();
             responseAddressState.setId(UUID.fromString(restaurantStateEntity.getUuid()));
-            responseAddressState.setStateName(restaurantStateEntity.getState_name());
+            responseAddressState.setStateName(restaurantStateEntity.getStateName());
 
             responseAddress.setState(responseAddressState);
 
@@ -164,7 +164,7 @@ public class RestaurantController {
 
             RestaurantDetailsResponseAddressState responseAddressState = new RestaurantDetailsResponseAddressState();
             responseAddressState.setId(UUID.fromString(restaurantStateEntity.getUuid()));
-            responseAddressState.setStateName(restaurantStateEntity.getState_name());
+            responseAddressState.setStateName(restaurantStateEntity.getStateName());
 
             responseAddress.setState(responseAddressState);
 
@@ -216,7 +216,7 @@ public class RestaurantController {
 
         RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
                 .id(UUID.fromString(restaurantEntity.getAddress().getState_id().getUuid()))
-                .stateName(restaurantEntity.getAddress().getState_id().getState_name());
+                .stateName(restaurantEntity.getAddress().getState_id().getStateName());
 
         //Creating the RestaurantDetailsResponseAddress for the RestaurantList
         RestaurantDetailsResponseAddress restaurantDetailsResponseAddress = new RestaurantDetailsResponseAddress()

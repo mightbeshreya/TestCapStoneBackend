@@ -97,7 +97,7 @@ public class OrderController {
                 });
                 OrderListAddressState orderListAddressState = new OrderListAddressState()
                         .id(UUID.fromString(ordersEntity.getAddress().getState_id().getUuid()))
-                        .stateName(ordersEntity.getAddress().getState_id().getState_name());
+                        .stateName(ordersEntity.getAddress().getState_id().getStateName());
 
                 OrderListAddress orderListAddress = new OrderListAddress().id(UUID.fromString(ordersEntity.getAddress().getUuid()))
                         .flatBuildingName(ordersEntity.getAddress().getFlat_buil_number())
