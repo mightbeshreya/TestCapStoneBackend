@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//This Class is created to access DB with respect to Address entity
 @Repository
 public class AddressDao {
 
@@ -18,12 +19,14 @@ public class AddressDao {
     private EntityManager entityManager;
     @PersistenceUnit
     private EntityManagerFactory emf;
-
+    
+    //To save the address
     public AddressEntity saveAddress(AddressEntity addressEntity) {
         entityManager.persist(addressEntity);
         return addressEntity;
     }
 
+    //To get address by UUID if no results null is returned.
     public AddressEntity getAddressByUUID(String uuid) {
         try {
             AddressEntity addressEntity = entityManager.createNamedQuery("getAddressByUuid", AddressEntity.class).setParameter("uuid", uuid).getSingleResult();
@@ -40,6 +43,7 @@ public class AddressDao {
         return p.matcher(pinCode).matches();
     }
 
+    //To get the State.
     public StateEntity getState(String uuid) {
         StateEntity s = null;
         EntityManager em = emf.createEntityManager();
@@ -48,12 +52,14 @@ public class AddressDao {
         return s;
     }
 
+    //To save the Address.
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerAddressEntity save(CustomerAddressEntity customerAddressEntity) {
         entityManager.persist(customerAddressEntity);
         return customerAddressEntity;
     }
 
+    //To delete the Address.
     @Transactional(propagation = Propagation.REQUIRED)
     public AddressEntity deleteAddress(AddressEntity addressEntity) {
         try {
@@ -64,6 +70,7 @@ public class AddressDao {
         }
     }
 
+    //To get the Address By ID.
     public AddressEntity getAddressById(Integer id) {
         try {
             return entityManager.createNamedQuery("getAddressById", AddressEntity.class)
