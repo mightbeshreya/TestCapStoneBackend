@@ -22,6 +22,7 @@ public class RestaurantCategoryService {
     private CategoryDao categoryDao;
 
     public List<RestaurantCategoryEntity> getRestaurantCategories(RestaurantEntity restaurantEntity) {
+
         return restaurantCategoryDao.getRestaurantCategories(restaurantEntity);
     }
 

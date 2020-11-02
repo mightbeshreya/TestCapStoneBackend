@@ -46,6 +46,14 @@ public class CategoryService {
 
     }
 
+    /*@Transactional(propagation = Propagation.REQUIRED)
+    public List<CategoryEntity> getCategoriesByRestaurant(String restaurantUuid) {
+        // Retrieve restaurantEntity from database
+        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByID(restaurantUuid);
+        // Retrieve CategoryEntity List from database
+        return categoryDao.getCategoriesByRestaurant(restaurantEntity);
+    }*/
+
     @Transactional(propagation = Propagation.REQUIRED)
     public CategoryEntity getCategoryById(String categoryUuid) throws CategoryNotFoundException {
         if(categoryUuid == null || categoryUuid == ""){

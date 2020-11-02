@@ -64,8 +64,8 @@ public class RestaurantEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName="id", nullable = false)
     )
     private Set<CategoryEntity> categoryEntities = new HashSet<>(); */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CategoryEntity> category = new ArrayList<CategoryEntity>();
+    //@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //private List<CategoryEntity> category = new ArrayList<CategoryEntity>();
 
     public long getId() {
         return id;
@@ -91,13 +91,13 @@ public class RestaurantEntity implements Serializable {
         this.restaurantName = restaurantName;
     }
 
-    public List<CategoryEntity> getCategories() {
+    /*public List<CategoryEntity> getCategories() {
         return category;
     }
 
     public void setCategories(List<CategoryEntity> categories) {
         this.category = categories;
-    }
+    }*/
 
     public String getPhotoUrl() {
         return photoUrl;
