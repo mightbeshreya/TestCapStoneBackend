@@ -12,13 +12,15 @@ import java.util.List;
 public class StateBusinessService {
 
     @Autowired
-    StateDao stateDao;
+    StateDao stateDao; //Handles all data related to the State.
 
+     /* This method is to get All State data.*/
     public List<StateEntity> getAllStates(){
         List<StateEntity> allStates = stateDao.getAllStates();
         return allStates;
     }
 
+    /* This method is to get State by ID*/
     public StateEntity getStateById(String id) {
         return stateDao.getStateByUuid(id);
     }
