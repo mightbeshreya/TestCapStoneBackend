@@ -18,18 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+// Address Controller Handles all  the Address related endpoints
+
 @RestController
 @RequestMapping("")
 @CrossOrigin
 public class AddressController {
 
     @Autowired
-    CustomerService customerService;
+    CustomerService customerService; // Handles all the Service Related to the Customer.
     @Autowired
-    AddressService addressService;
+    AddressService addressService; // Handles all the Service Related to the Address.
 
     @Autowired
-    StateBusinessService stateBusinessService;
+    StateBusinessService stateBusinessService; // Handles all the Service Related to the State.
 
 
     /* The method handles Address save Related request.It takes the details as per in the SaveAddressRequest
@@ -59,13 +61,7 @@ public class AddressController {
         //addressEntity.setState(state);
 
         final AddressEntity createdAddress = addressService.saveAddress(addressEntity, state);
-        /*final CustomerAuthEntity customerAuthTokenEntity = customerService.getCustomer(userAccessToken);
-
-        final CustomerAddressEntity customerAddressEntity = new CustomerAddressEntity();
-        customerAddressEntity.setAddress(createdAddress);
-        customerAddressEntity.setCustomer(customerAuthTokenEntity.getCustomer());
-        addressBusinessService.saveCustomerAddress(customerAddressEntity); */
-
+       
         //Creating SaveAddressResponse response
         final SaveAddressResponse saveAddressResponse = new SaveAddressResponse().id(createdAddress.getUuid()).status("ADDRESS SUCCESSFULLY REGISTERED");
         return new ResponseEntity<SaveAddressResponse>(saveAddressResponse, HttpStatus.CREATED);
@@ -78,8 +74,11 @@ public class AddressController {
     @RequestMapping(method = RequestMethod.GET, path = "/address/customer", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AddressListResponse> getAllSavedAddress(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
 
+         //Access the accessToken from the request Header
         String[] authorizationData = authorization.split("Bearer ");
         String userAccessToken = authorizationData[1];
+        
+        //Calls customerService getCustomer Method to check the validity of the customer.this methods returns the customerEntity  to be get all address.
         CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
 
         List<AddressEntity> sortedAddress = addressService.getAllAddress(customerEntity);
@@ -89,6 +88,7 @@ public class AddressController {
 
         List<AddressList> addressesList = new ArrayList<>();
 
+        //Looping in for each address in the addressEntities & then Created AddressList using the each address data and adds to addressLists.
         for(AddressEntity addressEntity: sortedAddress) {
             AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState().getUuid())).stateName(addressEntity.getState().getStateName());
             AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
@@ -99,15 +99,6 @@ public class AddressController {
         }
         addressListResponses.addresses(addressesList);
 
-        /*for (CustomerAddressEntity cae : customerAddressEntityList) {
-            AddressEntity addressEntity = cae.getAddress();
-            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState().getUuid())).stateName(addressEntity.getState().getStateName());
-            AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
-                    .flatBuildingName(addressEntity.getFlat_buil_number()).locality(addressEntity.getLocality())
-                    .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);
-            AddressListResponse addressListResponse = new AddressListResponse().addAddressesItem(addressList);
-            addressListResponses.add(addressListResponse);
-        } */
         return new ResponseEntity<AddressListResponse>(addressListResponses, HttpStatus.OK);
     }
 
