@@ -35,6 +35,7 @@ public class RestaurantController {
     @Autowired
     ItemService itemService;  // Handles all the Service Related to Item.
 
+
     @Autowired
     CustomerService customerService;  // Handles all the Service Related to Customer.
     /* The method handles get All Restaurants request
@@ -42,7 +43,7 @@ public class RestaurantController {
     */
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getAllRestaurants() {
-        
+
         //Calls restaurantsByRating method of restaurantService to get the list of restaurant entity.
         List<RestaurantEntity> listOfRestaurants = restaurantService.restaurantsByRating();
 
@@ -91,7 +92,7 @@ public class RestaurantController {
             //Adding it to the list
             restaurantList.add(restaurantDetails);
         }
-        
+
         //Creating the RestaurantListResponse by adding the list of RestaurantList
         restaurantListResponse.setRestaurants(restaurantList);
         return new ResponseEntity<>(restaurantListResponse, HttpStatus.OK);
@@ -242,7 +243,7 @@ public class RestaurantController {
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant/category/{category_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getRestaurantByCategoryId(
             @PathVariable(value = "category_id") final String categoryId) throws CategoryNotFoundException {
-        
+
         //Calls restaurantByCategory method of restaurantService to get the list of restaurant entity.
         List<RestaurantEntity> listOfCategoryRestaurants = restaurantService.restaurantByCategory(categoryId);
 
@@ -291,6 +292,6 @@ public class RestaurantController {
         return new ResponseEntity<RestaurantListResponse>(restaurantListResponse, HttpStatus.OK);
 
     }
-   
+
 }
 

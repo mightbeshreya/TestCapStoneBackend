@@ -18,6 +18,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/* Service - Customer Entity */
 @Service
 public class CustomerService {
 
@@ -31,6 +32,8 @@ public class CustomerService {
     @Autowired
     CustomerAddressDao customerAddressDao;
 
+    /* Save Customer in Database if no field is null or if customer is not registered already
+     and Email, Password and Phone Number are Valid Formats */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity saveCustomer(CustomerEntity customerEntity) throws SignUpRestrictedException {
         CustomerEntity isContactNumberExist = customerDao.IsContactNumberExists(customerEntity.getContactNumber());
@@ -92,6 +95,8 @@ public class CustomerService {
             throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
         }
     }
+
+    /* Get Customer Entity from Access Token */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity getCustomer(final String authorizationToken) throws AuthorizationFailedException{
         CustomerAuthEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
@@ -108,6 +113,8 @@ public class CustomerService {
         return customerAuth.getCustomer();
     }
 
+    /* Authenticate customer - whether customer exists in DB, whetther password matches, whether customer
+     is not logged out or session is not expired */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerAuthEntity authenticate(final String contactNumber, final String password) throws AuthenticationFailedException {
 
@@ -126,7 +133,6 @@ public class CustomerService {
             customerAuthTokenEntity.setExpiresAt(expiresAt);
             customerAuthTokenEntity.setAccessToken(jwtTokenProvider.generateToken(customerAuthTokenEntity.getUuid(), now, expiresAt));
             customerAuthTokenEntity.setLoginAt(now);
-            //customerAuthTokenEntity.setLogoutAt(expiresAt);
             customerDao.createAuthToken(customerAuthTokenEntity);
             return customerAuthTokenEntity;
         } else {
@@ -134,26 +140,7 @@ public class CustomerService {
         }
     }
 
-    /*@Transactional(propagation = Propagation.REQUIRED)
-    public CustomerEntity logout(final String accessToken) throws AuthorizationFailedException {
-        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
-        final ZonedDateTime current = ZonedDateTime.now();
-        if (customerAuthTokenEntity != null && customerAuthTokenEntity.getLogoutAt() != null) {
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
-        }
-        if (customerAuthTokenEntity != null && (customerAuthTokenEntity.getExpiresAt().isBefore(current) || customerAuthTokenEntity.getExpiresAt().isEqual(current))) {
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        }
-        if (customerAuthTokenEntity != null && customerAuthTokenEntity.getAccessToken().equals(accessToken)) {
-            final ZonedDateTime now = ZonedDateTime.now();
-            customerAuthTokenEntity.setLogoutAt(now);
-            CustomerEntity logOutCustomer = customerAuthTokenEntity.getCustomer();
-            customerDao.updateCustomerAuthToken(customerAuthTokenEntity);
-            return logOutCustomer;
-        } else {
-            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
-        }
-    } */
+    /* Set Logout in Database if No Exceptions like customer not present, customer not logged in, customer logged out occur */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerAuthEntity logout(final String accessToken) throws AuthorizationFailedException {
         CustomerAuthEntity customerAuthToken = customerDao.getUserAuthToken(accessToken);

@@ -12,12 +12,14 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/* Interaction to Database Repository */
 @Repository
 public class CustomerAddressDao {
 
     @PersistenceContext
     EntityManager entityManager;
 
+    /* Get Customer Address */
     public List<CustomerAddressEntity> getAddressByCustomer(final CustomerEntity customerEntity){
         try {
             return  entityManager.createNamedQuery("getCustomerAddress", CustomerAddressEntity.class)
@@ -27,19 +29,11 @@ public class CustomerAddressDao {
             return null;
         }
     }
+
+    /* Get Address Of Customer */
     public CustomerAddressEntity getSingleAddress(final AddressEntity address){
         try {
             return entityManager.createNamedQuery("getAddress", CustomerAddressEntity.class).setParameter("address", address).getSingleResult();
-        }catch (NoResultException nre){
-            return null;
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerAddressEntity getEntityByCustomerID(CustomerEntity customerEntity) {
-        try {
-            return entityManager.createNamedQuery("getCustomerAddress", CustomerAddressEntity.class)
-                    .setParameter("customer", customerEntity).getSingleResult();
         }catch (NoResultException nre){
             return null;
         }

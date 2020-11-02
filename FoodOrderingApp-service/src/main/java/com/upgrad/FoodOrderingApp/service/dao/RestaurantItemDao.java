@@ -10,12 +10,14 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/* Interacting With Database Repository */
 @Repository
 public class RestaurantItemDao {
 
     @PersistenceContext
     EntityManager entityManager;
 
+    /* Get Items By Restaurant */
     public List<RestaurantItemEntity> getItemByRestaurant(RestaurantEntity restaurantEntity) {
         try {
             List<RestaurantItemEntity> restaurantItemEntities = entityManager.createNamedQuery("getItemsByRestaurant", RestaurantItemEntity.class).setParameter("restaurant", restaurantEntity).getResultList();

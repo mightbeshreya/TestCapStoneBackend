@@ -10,12 +10,14 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Interacting with Database Repository */
 @Repository
 public class StateDao {
 
     @PersistenceContext
     EntityManager entityManager;
 
+    /* Get all states in Database */
     public List<StateEntity> getAllStates() {
         try {
             return entityManager.createNamedQuery("getAllStates", StateEntity.class).getResultList();
@@ -26,19 +28,11 @@ public class StateDao {
         }
     }
 
+    /* Get State Entity by state UUID */
     public StateEntity getStateByUuid(final String stateUuid) {
         try {
             return entityManager.createNamedQuery("getStateByUUID", StateEntity.class).setParameter("uuid", stateUuid).getSingleResult();
         } catch (NoResultException nre) {
-            return null;
-        }
-    }
-
-    public StateEntity getStateById(Integer id) {
-        try {
-            return entityManager.createNamedQuery("getStateById", StateEntity.class)
-                    .setParameter("id", id).getSingleResult();
-        }catch(NoResultException nre) {
             return null;
         }
     }

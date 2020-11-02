@@ -10,11 +10,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/* Interacting with Database Repository */
 @Repository
 public class RestaurantCategoryDao {
     @PersistenceContext
     EntityManager entityManager;
 
+    /* get categories tagged to Restaurant */
     public List<RestaurantCategoryEntity> getRestaurantCategories(RestaurantEntity restaurantEntity) {
         try{
             return entityManager.createNamedQuery("getRestaurantCategories", RestaurantCategoryEntity.class)
@@ -24,6 +26,7 @@ public class RestaurantCategoryDao {
         }
     }
 
+    /* Get Restaurants tagged to Category */
     public List<RestaurantCategoryEntity> getRestaurantsByCategoryId(CategoryEntity categoryEntity) {
         try {
             List<RestaurantCategoryEntity> categoryRestaurants = entityManager.createNamedQuery("getRestaurantsByCategoryId", RestaurantCategoryEntity.class)

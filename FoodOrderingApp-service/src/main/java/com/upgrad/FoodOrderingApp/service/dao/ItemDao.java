@@ -14,6 +14,7 @@ public class ItemDao {
     @PersistenceContext
     EntityManager entityManager;
 
+    /* Search Item with item UUID */
     public ItemEntity getItemByUuid(String uuid){
         try {
             ItemEntity itemEntity = entityManager.createNamedQuery("itemByUuid", ItemEntity.class).setParameter("uuid", uuid).getSingleResult();
@@ -22,6 +23,8 @@ public class ItemDao {
             return null;
         }
     }
+
+    /* Sorting */
     public Map<String,Integer> sortMapByValues(Map<String,Integer> map){
 
         List<Map.Entry<String,Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());

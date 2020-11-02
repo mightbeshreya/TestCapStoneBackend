@@ -17,6 +17,7 @@ public class OrderDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /* get Orders By Restaurant */
     public List<OrderEntity> getOrderByRestaurant(RestaurantEntity restaurantEntity) {
         try {
             List<OrderEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByRestaurant", OrderEntity.class).setParameter("restaurant", restaurantEntity).getResultList();
@@ -26,6 +27,7 @@ public class OrderDao {
         }
     }
 
+    /* Get ORders By Customers */
     public List<OrderEntity> getOrdersByCustomers(CustomerEntity customerEntity) {
         try {
             List<OrderEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByCustomer", OrderEntity.class).setParameter("customer", customerEntity).getResultList();
@@ -35,6 +37,7 @@ public class OrderDao {
         }
     }
 
+    /* Persist Order */
     public OrderEntity saveOrder(OrderEntity orderEntity) {
         try {
             entityManager.persist(orderEntity);
@@ -44,6 +47,7 @@ public class OrderDao {
         }
     }
 
+    /* Persist Order Item  */
     public OrderItemEntity saveOrderItem(OrderItemEntity orderedItem) {
         try {
             entityManager.persist(orderedItem);

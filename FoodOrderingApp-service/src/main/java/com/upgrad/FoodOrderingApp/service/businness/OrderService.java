@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+/* Service for Orders */
 @Service
 public class OrderService {
 
@@ -46,7 +47,7 @@ public class OrderService {
     @Autowired
     CustomerAddressDao customerAddressDao;
 
-
+    /* get Orders By customerUUID */
     @Transactional(propagation = Propagation.REQUIRED)
     public List<OrderEntity> getOrdersByCustomers( String customerUuid){
 
@@ -56,86 +57,26 @@ public class OrderService {
         return ordersEntities;
     }
 
+
+    /* Get Order Items Order By */
     public List<OrderItemEntity> getOrderItemsByOrder(OrderEntity orderEntity) {
         List<OrderItemEntity> orderItemEntities = orderItemDao.getOrderItemsByOrder(orderEntity);
         return orderItemEntities;
     }
 
+    /* Save Order in Database */
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderEntity saveOrder(OrderEntity orderEntity) {
         return orderDao.saveOrder(orderEntity);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public OrderEntity saveOrderList(final String accessToken, final String couponUuid,
-                                     final String addressUuid, final String paymentUuid, final String restaurantUuid,
-                                     final String itemUuid, final BigDecimal bill)
-            throws AuthorizationFailedException, CouponNotFoundException ,
-            AddressNotFoundException, PaymentMethodNotFoundException,
-            RestaurantNotFoundException, ItemNotFoundException{
-        CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
-        if (customerAuthTokenEntity == null) {
-            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
-        }
-        if(customerAuthTokenEntity.getLogoutAt()!=null) {
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
-        }
-        final ZonedDateTime now = ZonedDateTime.now();
-        if(customerAuthTokenEntity.getExpiresAt().isBefore(now) || customerAuthTokenEntity.getExpiresAt().isEqual(now)){
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        }
-        CouponEntity couponEntity = couponDao.getCouponByUUID(couponUuid);
-        if(couponEntity == null) {
-            throw new CouponNotFoundException("CPF-002", "No coupon by this id");
-        }
-        AddressEntity addressEntity = addressDao.getAddressByUUID(addressUuid);
-        if(addressEntity == null) {
-            throw new AddressNotFoundException("ANF-003", "No address by this id");
-        }
-
-        CustomerEntity customerEntity = customerAuthTokenEntity.getCustomer();
-        CustomerAddressEntity customerAddressEntity = customerAddressDao.getEntityByCustomerID(customerEntity);
-        if(addressEntity!=customerAddressEntity.getAddress()) {
-            throw new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address");
-        }
-
-        PaymentEntity paymentEntity = paymentDao.getPaymentMethodByUUID(paymentUuid) ;
-        if(paymentEntity == null ) {
-            throw new PaymentMethodNotFoundException("PNF-002", "No payment method found by this id");
-        }
-
-        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
-        if(restaurantEntity == null) {
-            throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
-        }
-
-        ItemEntity itemEntity = itemDao.getItemByUuid(itemUuid);
-        if(itemEntity == null ) {
-            throw new ItemNotFoundException("INF-003", "No item by this id exist");
-        }
-
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setCustomer(customerEntity);
-        orderEntity.setCoupon(couponEntity);
-        orderEntity.setAddress(addressEntity);
-        orderEntity.setPayment(paymentEntity);
-        orderEntity.setRestaurant(restaurantEntity);
-        orderEntity.setUuid(UUID.randomUUID().toString());
-        orderEntity.setBill(bill.doubleValue());
-        Timestamp instant= Timestamp.from(Instant.now());
-        orderEntity.setDate(instant);
-
-        OrderEntity savedOrderEntity = orderDao.saveOrder(orderEntity);
-        return savedOrderEntity;
-    }
-
+    /* Save Order Item */
     @Transactional(propagation = Propagation.REQUIRED)
     public OrderItemEntity saveOrderItem(OrderItemEntity orderedItem) {
         return orderDao.saveOrderItem(orderedItem);
     }
 
-
-
+    /* get Coupon through Coupon UUID */
     @Transactional(propagation = Propagation.REQUIRED)
     public CouponEntity getCouponByCouponId(final String couponUuid) throws CouponNotFoundException{
         CouponEntity couponEntity = couponDao.getCouponByUUID(couponUuid);
@@ -145,20 +86,10 @@ public class OrderService {
         return couponEntity;
     }
 
+    /* get Coupon By Coupon Name from DB */
     @Transactional(propagation = Propagation.REQUIRED)
     public CouponEntity getCouponByCouponName(final String couponName) throws AuthorizationFailedException,
             CouponNotFoundException {
-        /*CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(accessToken);
-        if(customerAuthTokenEntity == null) {
-            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
-        }
-        if(customerAuthTokenEntity.getLogoutAt()!=null) {
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
-        }
-        final ZonedDateTime now = ZonedDateTime.now();
-        if(customerAuthTokenEntity.getExpiresAt().isBefore(now) || customerAuthTokenEntity.getExpiresAt().isEqual(now)){
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        } */
         if(couponName == null || couponName == "" || couponName.isEmpty()) {
             throw new CouponNotFoundException("CPF-002", "Coupon name field should not be empty");
         }

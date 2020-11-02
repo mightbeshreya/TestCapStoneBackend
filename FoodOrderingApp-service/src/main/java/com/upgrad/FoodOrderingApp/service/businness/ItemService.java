@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+/* Service for Item Entity and OrderItem and Order and Restaurant and Category */
 @Service
 public class ItemService {
 
@@ -32,6 +33,9 @@ public class ItemService {
     @Autowired
     RestaurantItemDao restaurantItemDao;
 
+    /* Get Items By Popularity from Restaurant Entity,
+    * Check for Restaurant exists in DB, Return Sorted List
+    *  */
     public List<ItemEntity> getItemsByPopularity(RestaurantEntity restaurantEntity) throws RestaurantNotFoundException {
 
         if (restaurantEntity == null) {
@@ -68,11 +72,10 @@ public class ItemService {
         return sortedItemEntites;
     }
 
+    /* Get Items By filtering Category UUID and Restaurant UUID - Returns list of items in a category in a restaurant  */
     public List<ItemEntity> getItemsByCategoryAndRestaurant(String restaurantUuid, String categoryUuid) {
 
         RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
-
-        //Set<ItemEntity> restaurantItems = restaurantEntity.getItems();
 
         CategoryEntity categoryEntity = categoryDao.getCategoryByUuid(categoryUuid);
 
@@ -91,6 +94,7 @@ public class ItemService {
         return itemEntities;
     }
 
+    /* Get Item by Item UUID */
     @Transactional(propagation = Propagation.REQUIRED)
     public ItemEntity getItemByUuid(final String itemUuid) throws ItemNotFoundException {
         ItemEntity itemEntity = itemDao.getItemByUuid(itemUuid);
