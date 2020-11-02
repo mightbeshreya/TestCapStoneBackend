@@ -15,85 +15,80 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
+// Order Controller Handles all  the Order related endpoints
 @RestController
 @RequestMapping("")
 @CrossOrigin
 public class OrderController {
-    //@Autowired
-    //private CouponService couponService;
 
     @Autowired
-    private PaymentService paymentService;
+    private PaymentService paymentService; // Handles all the Service Related Payment.
 
     @Autowired
-    private OrderService orderService;
+    private OrderService orderService; // Handles all the Service Related Order.
 
     @Autowired
-    private CustomerService customerService;
+    private CustomerService customerService; // Handles all the Service Related Customer.
 
     @Autowired
-    private AddressService addressService;
+    private AddressService addressService; // Handles all the Service Related Address.
 
     @Autowired
-    private RestaurantService restaurantService;
+    private RestaurantService restaurantService; // Handles all the Service Related Restaurant.
 
     @Autowired
-    private ItemService itemService;
+    private ItemService itemService; // Handles all the Service Related Item.
 
+     /* The method handles get Coupon By CouponName request.It takes authorization from the header and coupon name as the path vataible.
+    & produces response in CouponDetailsResponse and returns UUID,Coupon Name and Percentage of coupon present in the DB and if error returns error code and error Message.
+    */
     @RequestMapping(method = RequestMethod.GET, path = "/order/coupon/{coupon_name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CouponDetailsResponse> getCouponByCouponName(@RequestHeader("authorization") final String authorization,
                            @PathVariable("coupon_name") final String couponName)
                             throws AuthorizationFailedException, CouponNotFoundException {
-        /*String[] authorizedData = authorization.split(" ");
-        String accessToken;
-        try {
-            accessToken = authorizedData[1];
-        }catch (ArrayIndexOutOfBoundsException e) {
-            accessToken = authorizedData[0];
-        } */
-
+        
+        //Access the accessToken from the request Header
         String[] authorizationData = authorization.split("Bearer ");
         String userAccessToken = authorizationData[1];
+        
+        //Calls customerService getCustomerMethod to check the validity of the customer.this methods returns the customerEntity.
         CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
 
+        //Calls getCouponByCouponName of orderService to get the coupon by name from DB
         CouponEntity couponEntity =  orderService.getCouponByCouponName(couponName);
 
+        //Creating the couponDetailsResponse containing UUID,Coupon Name and percentage.
         CouponDetailsResponse couponDetailsResponse = new CouponDetailsResponse()
                 .id(UUID.fromString(couponEntity.getUuid())).couponName(couponEntity.getCouponName())
                 .percent(couponEntity.getPercent());
 
         return new ResponseEntity<CouponDetailsResponse>(couponDetailsResponse, HttpStatus.OK);
     }
+    
+    /* The method handles past order request of customer.It takes authorization from the header
+    & produces response in CustomerOrderResponse and returns details of all the past order arranged in date wise and if error returns error code and error Message.
+    */
     @RequestMapping(method = RequestMethod.GET, path = "/order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CustomerOrderResponse> getPastOrdersOfUser(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException, AuthorizationFailedException {
 
-        /*String accessToken = authorization.split("Bearer ")[1];
-
-        CustomerAuthEntity customerEntity = customerService.getCustomer(accessToken);
-
-        if (accessToken.equals(null)) {
-            throw new AuthenticationFailedException("ATHR-001", "Customer is not Logged in.");
-        }
-        if (customerEntity.getLogoutAt() != null && accessToken != null) {
-            throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
-        }
-        final ZonedDateTime customerSessionExpireTime = ZonedDateTime.now();
-        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.systemDefault());
-        if (customerSessionExpireTime.compareTo(customerEntity.getExpiresAt()) < 0) {
-            throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
-        } */
-
+        
+        //Access the accessToken from the request Header
         String[] authorizationData = authorization.split("Bearer ");
         String userAccessToken = authorizationData[1];
+        
+        //Calls customerService getCustomerMethod to check the validity of the customer.this methods returns the customerEntity.
         CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
 
+        //Calls getOrdersByCustomers of orderService to get all the past orders of the customer.
         List<OrderEntity> ordersEntities = orderService.getOrdersByCustomers(customerEntity.getUuid());
 
+        //Creating List of OrderList
         List<OrderList> orderLists = new LinkedList<>();
 
-        if (ordersEntities != null) {
-            for (OrderEntity orderEntity : ordersEntities) {
+        if (ordersEntities != null) { //Checking if orderentities is null if yes them empty list is returned
+            for (OrderEntity orderEntity : ordersEntities) { //looping in for every orderentity in orderentities
 
+                //Calls getOrderItemsByOrder by order of orderService get all the items ordered in past by orders.
                 List<OrderItemEntity> orderItemEntities = orderService.getOrderItemsByOrder(orderEntity);
 
                 List<ItemQuantityResponse> itemQuantityResponseList = new LinkedList<>();
@@ -146,6 +141,10 @@ public class OrderController {
 
     }
 
+    
+    /* The method handles save Order request.It takes authorization from the header and other details in SaveOrderRequest.
+        & produces response in SaveOrderResponse and returns UUID and successful message and if error returns error code and error Message.
+        */
     @RequestMapping(method = RequestMethod.POST, path = "/order", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader("authorization") final String authorization,
@@ -153,15 +152,12 @@ public class OrderController {
             throws AuthorizationFailedException, CouponNotFoundException, AddressNotFoundException,
             PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException
     {
-        /*String[] authorizedData = authorization.split(" ");
-        String accessToken;
-        try {
-            accessToken = authorizedData[1];
-        }catch (ArrayIndexOutOfBoundsException e) {
-            accessToken = authorizedData[0];
-        } */
+        
+        //Access the accessToken from the request Header        
         String[] authorizationData = authorization.split("Bearer ");
         String userAccessToken = authorizationData[1];
+                
+        //Calls customerService getCustomerMethod to check the validity of the customer.this methods returns the customerEntity.        
         CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
 
         OrderEntity orderEntity = new OrderEntity();
@@ -218,10 +214,7 @@ public class OrderController {
             orderService.saveOrderItem(orderedItem);
         }
 
-        /*String itemUuid = itemList.get(0).getItemId().toString();
-        OrderList orderList = new OrderList();
-        OrderEntity orderEntity = orderBusinessService.saveOrderList(accessToken,couponUuid,
-                addressUuid,paymentUuid,restaurantUuid,itemUuid, bill); */
+        //Creating the SaveOrderResponse for the endpoint containing UUID and success message.
         SaveOrderResponse saveOrderResponse = new SaveOrderResponse().id(savedOrderEntity.getUuid())
                 .status("ORDER SUCCESSFULLY PLACED");
         return new ResponseEntity<SaveOrderResponse>(saveOrderResponse, HttpStatus.CREATED);
