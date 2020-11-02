@@ -16,24 +16,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+// ItemController Handles all  the Item related endpoints
+
 @RestController
 @RequestMapping("")
 @CrossOrigin
 public class ItemController {
 
     @Autowired
-    private ItemService itemService;
+    private ItemService itemService; // Handles all the Service Related to Item.
 
     @Autowired
-    private RestaurantService restaurantService;
+    private RestaurantService restaurantService; // Handles all the Service Related to Restaurant.
 
+     /* The method handles get Top Five Items By Popularity request & takes restaurant_id as the path variable
+    & produces response in ItemListResponse and returns list of 5 items sold by restaurant on basis of popularity  with details from the db. If error returns error code and error message.
+    */
     @RequestMapping(method = RequestMethod.GET, path = "/item/restaurant/{restaurant_id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ItemListResponse> getTopFiveItemsByRestaurantId(@PathVariable("restaurant_id") final String restaurantUuid) throws RestaurantNotFoundException {
 
+        //Calls restaurantByUUID method of restaurantService to get the restaurant entity.
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
 
+        //Calls getItemsByPopularity method of itemService to get the ItemEntity.
         List<ItemEntity> itemEntities = itemService.getItemsByPopularity(restaurantEntity);
 
+        //Creating the ItemListResponse details as required.
         ItemListResponse itemListResponse = new ItemListResponse();
 
         itemEntities.forEach(itemEntity -> {
