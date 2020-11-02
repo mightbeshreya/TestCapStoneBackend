@@ -221,7 +221,7 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1)).restaurantByCategory("someCategoryId");
     }
 
-/*
+
     // ------------------------------------------ GET /restaurant ------------------------------------------
 
     //This test case passes when you able to fetch the list of all restaurants.
@@ -251,7 +251,7 @@ public class RestaurantControllerTest {
         verify(mockRestaurantService, times(1)).restaurantsByRating();
         verify(mockCategoryService, times(1)).getCategoriesByRestaurant(restaurantEntity.getUuid());
     }
-*/
+
 
     // ------------------------------------------ PUT /restaurant/{restaurant_id} ------------------------------------------
 

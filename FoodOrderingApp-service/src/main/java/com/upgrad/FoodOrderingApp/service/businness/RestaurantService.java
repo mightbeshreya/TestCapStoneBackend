@@ -42,6 +42,11 @@ public class RestaurantService {
         return restaurantDao.getAllRestaurants();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<RestaurantEntity> restaurantsByRating() {
+        return restaurantDao.restaurantsByRating();
+    }
+
     public List<RestaurantEntity> restaurantByCategory(String categoryId) throws CategoryNotFoundException {
             if (categoryId == null || categoryId == "") {
                 throw new CategoryNotFoundException("CNF-001", "Category id field should not be empty");
