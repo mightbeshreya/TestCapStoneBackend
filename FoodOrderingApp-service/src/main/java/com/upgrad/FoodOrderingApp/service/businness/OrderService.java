@@ -48,23 +48,23 @@ public class OrderService {
 
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<OrdersEntity> getOrdersByCustomers(String accessToken,String customerUuid){
+    public List<OrderEntity> getOrdersByCustomers( String customerUuid){
 
         CustomerEntity customerEntity = customerDao.getCustomerByUuid(customerUuid);
 
-        List<OrdersEntity> ordersEntities = orderDao.getOrdersByCustomers(customerEntity);
+        List<OrderEntity> ordersEntities = orderDao.getOrdersByCustomers(customerEntity);
         return ordersEntities;
     }
 
-    public List<OrderItemEntity> getOrderItemsByOrder(OrdersEntity ordersEntity) {
-        List<OrderItemEntity> orderItemEntities = orderItemDao.getOrderItemsByOrder(ordersEntity);
+    public List<OrderItemEntity> getOrderItemsByOrder(OrderEntity orderEntity) {
+        List<OrderItemEntity> orderItemEntities = orderItemDao.getOrderItemsByOrder(orderEntity);
         return orderItemEntities;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public OrdersEntity saveOrderList(final String accessToken, final String couponUuid,
-                                      final String addressUuid, final String paymentUuid, final String restaurantUuid,
-                                      final String itemUuid, final BigDecimal bill)
+    public OrderEntity saveOrderList(final String accessToken, final String couponUuid,
+                                     final String addressUuid, final String paymentUuid, final String restaurantUuid,
+                                     final String itemUuid, final BigDecimal bill)
             throws AuthorizationFailedException, CouponNotFoundException ,
             AddressNotFoundException, PaymentMethodNotFoundException,
             RestaurantNotFoundException, ItemNotFoundException{
@@ -109,18 +109,18 @@ public class OrderService {
             throw new ItemNotFoundException("INF-003", "No item by this id exist");
         }
 
-        OrdersEntity ordersEntity = new OrdersEntity();
-        ordersEntity.setCustomer(customerEntity);
-        ordersEntity.setCoupon(couponEntity);
-        ordersEntity.setAddress(addressEntity);
-        ordersEntity.setPayment(paymentEntity);
-        ordersEntity.setRestaurant(restaurantEntity);
-        ordersEntity.setUuid(UUID.randomUUID().toString());
-        ordersEntity.setBill(bill.doubleValue());
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setCustomer(customerEntity);
+        orderEntity.setCoupon(couponEntity);
+        orderEntity.setAddress(addressEntity);
+        orderEntity.setPayment(paymentEntity);
+        orderEntity.setRestaurant(restaurantEntity);
+        orderEntity.setUuid(UUID.randomUUID().toString());
+        orderEntity.setBill(bill.doubleValue());
         Timestamp instant= Timestamp.from(Instant.now());
-        ordersEntity.setDate(instant);
+        orderEntity.setDate(instant);
 
-        OrdersEntity savedOrderEntity = orderDao.saveORDER(ordersEntity);
+        OrderEntity savedOrderEntity = orderDao.saveORDER(orderEntity);
         return savedOrderEntity;
     }
 

@@ -67,7 +67,7 @@ public class RestaurantController {
             responseAddress.setCity(restaurantAddress.getCity());
             responseAddress.setPincode(restaurantAddress.getPincode());
 
-            StateEntity restaurantStateEntity = stateBusinessService.getStateById(restaurantAddress.getState_id().getUuid());
+            StateEntity restaurantStateEntity = stateBusinessService.getStateById(restaurantAddress.getState().getUuid());
 
             RestaurantDetailsResponseAddressState responseAddressState = new RestaurantDetailsResponseAddressState();
             responseAddressState.setId(UUID.fromString(restaurantStateEntity.getUuid()));
@@ -160,7 +160,7 @@ public class RestaurantController {
             responseAddress.setCity(restaurantAddress.getCity());
             responseAddress.setPincode(restaurantAddress.getPincode());
 
-            StateEntity restaurantStateEntity = stateBusinessService.getStateById(restaurantAddress.getState_id().getUuid());
+            StateEntity restaurantStateEntity = stateBusinessService.getStateById(restaurantAddress.getState().getUuid());
 
             RestaurantDetailsResponseAddressState responseAddressState = new RestaurantDetailsResponseAddressState();
             responseAddressState.setId(UUID.fromString(restaurantStateEntity.getUuid()));
@@ -218,8 +218,8 @@ public class RestaurantController {
         }
 
         RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState();
-        restaurantDetailsResponseAddressState.setId(UUID.fromString(restaurantEntity.getAddress().getState_id().getUuid()));
-        restaurantDetailsResponseAddressState.setStateName(restaurantEntity.getAddress().getState_id().getStateName());
+        restaurantDetailsResponseAddressState.setId(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()));
+        restaurantDetailsResponseAddressState.setStateName(restaurantEntity.getAddress().getState().getStateName());
 
         //Creating the RestaurantDetailsResponseAddress for the RestaurantList
         RestaurantDetailsResponseAddress restaurantDetailsResponseAddress = new RestaurantDetailsResponseAddress()

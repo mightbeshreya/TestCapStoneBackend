@@ -6,8 +6,7 @@ import com.upgrad.FoodOrderingApp.api.model.CustomerOrderResponse;
 import com.upgrad.FoodOrderingApp.api.model.ItemQuantity;
 import com.upgrad.FoodOrderingApp.api.model.SaveOrderRequest;
 import com.upgrad.FoodOrderingApp.service.businness.*;
-import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +29,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.junit.Assert.assertEquals;
 
 // This class contains all the test cases regarding the order controller
 @RunWith(SpringRunner.class)
@@ -351,7 +352,6 @@ public class OrderControllerTest {
         verify(mockOrderService, times(0)).saveOrderItem(any());
     }
 */
-    /*
     // ------------------------------------------ GET /order ------------------------------------------
 
     //This test case passes when you are able to retrieve all past orders placed by you
@@ -435,7 +435,7 @@ public class OrderControllerTest {
         verify(mockCustomerService, times(1)).getCustomer("invalid_auth");
         verify(mockOrderService, times(0)).getOrdersByCustomers(anyString());
     }
-*/
+
     // ------------------------------------------ GET /order/coupon/{coupon_name} ------------------------------------------
 
     //This test case passes when you are able to retrieve coupon details by coupon name.
@@ -548,7 +548,7 @@ public class OrderControllerTest {
         verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
         verify(mockOrderService, times(1)).getCouponByCouponName("myCoupon");
     }
-/*
+
     // ------------------------------------------ POJO Builder ------------------------------------------
 
     private SaveOrderRequest getSaveOrderRequest() {
@@ -611,5 +611,5 @@ public class OrderControllerTest {
                 orderDate, paymentEntity, customerEntity, addressEntity, restaurantEntity);
     }
 
-*/
+
 }

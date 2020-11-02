@@ -108,7 +108,7 @@ public class AddressEntity {
         this.pincode = pincode;
     }
 
-    public StateEntity getState_id() {
+    public StateEntity getState() {
         return state_id;
     }
 

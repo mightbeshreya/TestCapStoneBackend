@@ -4,15 +4,16 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "orders")
 @NamedQueries({
-        @NamedQuery(name = "getOrdersByRestaurant", query = "select o from OrdersEntity o where o.restaurant = :restaurant"),
-        @NamedQuery(name = "getOrdersByCustomer", query = "select o from OrdersEntity o where o.customer = :customer")
+        @NamedQuery(name = "getOrdersByRestaurant", query = "select o from OrderEntity o where o.restaurant = :restaurant"),
+        @NamedQuery(name = "getOrdersByCustomer", query = "select o from OrderEntity o where o.customer = :customer")
 })
-public class OrdersEntity implements Serializable {
+public class OrderEntity implements Serializable {
 
     @Id
     @Column(name = "ID")
@@ -37,7 +38,7 @@ public class OrdersEntity implements Serializable {
 
     @Column(name = "DATE")
     @NotNull
-    private Timestamp date;
+    private Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PAYMENT_ID")
@@ -58,11 +59,11 @@ public class OrdersEntity implements Serializable {
     @NotNull
     private RestaurantEntity restaurant;
 
-    public OrdersEntity() {
+    public OrderEntity() {
 
     }
 
-    public OrdersEntity(String uuid, Double bill, CouponEntity couponEntity, Double discount, Timestamp orderDate, PaymentEntity paymentEntity, CustomerEntity customerEntity, AddressEntity addressEntity, RestaurantEntity restaurantEntity) {
+    public OrderEntity(String uuid, Double bill, CouponEntity couponEntity, Double discount, Date orderDate, PaymentEntity paymentEntity, CustomerEntity customerEntity, AddressEntity addressEntity, RestaurantEntity restaurantEntity) {
         this.uuid = uuid;
         this.bill = bill;
         this.coupon = couponEntity;
@@ -115,11 +116,11 @@ public class OrdersEntity implements Serializable {
         this.discount = discount;
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -90,7 +90,7 @@ public class AddressController {
         List<AddressList> addressesList = new ArrayList<>();
 
         for(AddressEntity addressEntity: sortedAddress) {
-            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getStateName());
+            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState().getUuid())).stateName(addressEntity.getState().getStateName());
             AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
                     .flatBuildingName(addressEntity.getFlat_buil_number()).locality(addressEntity.getLocality())
                     .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);
@@ -101,7 +101,7 @@ public class AddressController {
 
         /*for (CustomerAddressEntity cae : customerAddressEntityList) {
             AddressEntity addressEntity = cae.getAddress();
-            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getStateName());
+            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState().getUuid())).stateName(addressEntity.getState().getStateName());
             AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
                     .flatBuildingName(addressEntity.getFlat_buil_number()).locality(addressEntity.getLocality())
                     .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);

@@ -2,12 +2,10 @@ package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.dao.*;
 import com.upgrad.FoodOrderingApp.service.entity.*;
-import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RelationServiceNotRegisteredException;
 import java.util.*;
 
 @Service
@@ -36,7 +34,7 @@ public class ItemService {
         if (restaurantEntity == null) {
             throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
         }
-        List<OrdersEntity> ordersEntities = orderDao.getOrderByRestaurant(restaurantEntity);
+        List<OrderEntity> ordersEntities = orderDao.getOrderByRestaurant(restaurantEntity);
 
         List<ItemEntity> itemEntities = new LinkedList<>();
 
