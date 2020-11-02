@@ -9,11 +9,16 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+
+//This Class is created to access DB with respect to Restaurant entity
+
 @Repository
 public class RestaurantDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    
+    //To get the list of restaurant by ratings from db
     public List<RestaurantEntity> restaurantsByRating() {
         try {
             List<RestaurantEntity> allRestaurants = entityManager.createNamedQuery("getAllRestaurants", RestaurantEntity.class)
@@ -34,6 +39,8 @@ public class RestaurantDao {
         }
     }
 
+    
+    //To get restaurant by UUID from db
     public RestaurantEntity getRestaurantByUuid(String uuid) {
 
         try {
@@ -44,6 +51,8 @@ public class RestaurantDao {
         }
     }
 
+    
+    //To get the list of restaurant by name from db
     public List<RestaurantEntity> restaurantsByName(String restaurantName) {
         try {
             String restaurantNameLow = "%" + restaurantName.toLowerCase() + "%";
@@ -54,24 +63,20 @@ public class RestaurantDao {
         }
     }
 
-    public List<RestaurantEntity> restaurantByName(String restaurantName) {
-        try {
-            String restaurantNameLow = "%" + restaurantName.toLowerCase() + "%";
-            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurantByName", RestaurantEntity.class).setParameter("restaurant_name_lower", restaurantNameLow).getResultList();
-            return restaurantEntities;
-        } catch (NoResultException nre) {
-            return null;
-        }
-    }
-
+    
+    //To update the restaurant in the db and return updated restaurant entity.
     public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurantEntity) {
         return entityManager.merge(restaurantEntity);
     }
 
+    
+    //To update the restaurant details in the db and return updated restaurant entity.
     public RestaurantEntity updateRestaurantDetails(RestaurantEntity restaurantEntity) {
         return entityManager.merge(restaurantEntity);
     }
 
+    
+    //To get Auth token in the db and return accessToken.
     public CustomerAuthEntity getUserAuthToken(final String accessToken) {
         try {
             return entityManager.createNamedQuery("getToken", CustomerAuthEntity.class).setParameter("accessToken", accessToken).getSingleResult();
