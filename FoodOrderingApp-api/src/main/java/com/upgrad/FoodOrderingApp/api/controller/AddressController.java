@@ -1,8 +1,6 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
-import com.upgrad.FoodOrderingApp.api.model.DeleteAddressResponse;
-import com.upgrad.FoodOrderingApp.api.model.SaveAddressRequest;
-import com.upgrad.FoodOrderingApp.api.model.SaveAddressResponse;
+import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.AddressService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.StateBusinessService;
@@ -16,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -48,7 +48,7 @@ public class AddressController {
         //Creating addressEntity from SaveAddressRequest data.
         AddressEntity addressEntity = new AddressEntity();
 
-        addressEntity.setFlat_buil_number(saveAddressRequest.getFlatBuildingName());
+        addressEntity.setFlatBuilNo(saveAddressRequest.getFlatBuildingName());
         addressEntity.setCity(saveAddressRequest.getCity());
         addressEntity.setLocality(saveAddressRequest.getLocality());
         addressEntity.setPincode(saveAddressRequest.getPincode());
@@ -56,7 +56,7 @@ public class AddressController {
         addressEntity.setActive(1);
         System.out.println("saveAddressRequest state ID : "+saveAddressRequest.getStateUuid());
         StateEntity state = addressService.getStateByUUID(saveAddressRequest.getStateUuid());
-        //addressEntity.setState_id(state);
+        //addressEntity.setState(state);
 
         final AddressEntity createdAddress = addressService.saveAddress(addressEntity, state);
         /*final CustomerAuthEntity customerAuthTokenEntity = customerService.getCustomer(userAccessToken);
@@ -74,16 +74,32 @@ public class AddressController {
     /*  The method handles get all Address  request.It takes the authorization
          & produces response in AddressListResponse and returns list of Customer Address .If error Return error code and error Message.
           */
-    /*
+
     @RequestMapping(method = RequestMethod.GET, path = "/address/customer", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<AddressListResponse>> getAllSavedAddress(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
+    public ResponseEntity<AddressListResponse> getAllSavedAddress(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
 
-        String[] bearerToken = authorization.split("Bearer ");
+        String[] authorizationData = authorization.split("Bearer ");
+        String userAccessToken = authorizationData[1];
+        CustomerEntity customerEntity = customerService.getCustomer(userAccessToken);
 
-        List<CustomerAddressEntity> customerAddressEntityList = addressBusinessService.getAddressByCustomer(bearerToken[1]);
-        List<AddressListResponse> addressListResponses = new ArrayList<>();
+        List<AddressEntity> sortedAddress = addressService.getAllAddress(customerEntity);
 
-        for (CustomerAddressEntity cae : customerAddressEntityList) {
+        //List<CustomerAddressEntity> customerAddressEntityList = addressService.getAllAddress(bearerToken[1]);
+        AddressListResponse addressListResponses = new AddressListResponse();
+
+        List<AddressList> addressesList = new ArrayList<>();
+
+        for(AddressEntity addressEntity: sortedAddress) {
+            AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getState_name());
+            AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
+                    .flatBuildingName(addressEntity.getFlat_buil_number()).locality(addressEntity.getLocality())
+                    .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);
+            //AddressListResponse addressListResponse = new AddressListResponse().addAddressesItem(addressList);
+            addressesList.add(addressList);
+        }
+        addressListResponses.addresses(addressesList);
+
+        /*for (CustomerAddressEntity cae : customerAddressEntityList) {
             AddressEntity addressEntity = cae.getAddress();
             AddressListState addressListState = new AddressListState().id(UUID.fromString(addressEntity.getState_id().getUuid())).stateName(addressEntity.getState_id().getState_name());
             AddressList addressList = new AddressList().id(UUID.fromString(addressEntity.getUuid()))
@@ -91,10 +107,10 @@ public class AddressController {
                     .city(addressEntity.getCity()).pincode(addressEntity.getPincode()).state(addressListState);
             AddressListResponse addressListResponse = new AddressListResponse().addAddressesItem(addressList);
             addressListResponses.add(addressListResponse);
-        }
-        return new ResponseEntity<List<AddressListResponse>>(addressListResponses, HttpStatus.OK);
+        } */
+        return new ResponseEntity<AddressListResponse>(addressListResponses, HttpStatus.OK);
     }
-    */
+
     /*  The method handles delete  Address  request.It takes the authorization and path variables address UUID
   & produces response in DeleteAddressResponse and returns UUID of deleted address and Successfull message .If error Return error code and error Message.
    */

@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AddressService {
@@ -44,7 +46,7 @@ public class AddressService {
         if (!addressDao.IsPinCodeValid(addressEntity.getPincode())) {
             throw new SaveAddressException("SAR-002", "Invalid pincode");
         }
-        addressEntity.setState_id(stateEntity);
+        addressEntity.setState(stateEntity);
         //CustomerAuthEntity customerAuthTokenEntity = customerDao.checkAuthToken(authorizationToken);
 
         /*if (customerAuthTokenEntity.equals(null)) {
@@ -81,11 +83,11 @@ public class AddressService {
 
     //To get Address By Customer
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<CustomerAddressEntity> getAddressByCustomer(final String authorizationToken) throws AuthorizationFailedException {
+    public List<AddressEntity> getAllAddress(CustomerEntity customerEntity) throws AuthorizationFailedException {
 
-        CustomerAuthEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
+        //CustomerAuthEntity customerAuth = customerDao.checkAuthToken(authorizationToken);
 
-        if (customerAuth.equals(null)) {
+        /*if (customerAuth.equals(null)) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
         }
         final ZonedDateTime customerSignOutTime = customerAuth.getLogoutAt();
@@ -98,12 +100,17 @@ public class AddressService {
         ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.systemDefault());
         if (customerSessionExpireTime.compareTo(currentTime) < 0) {
             throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
+        } */
+
+        List<CustomerAddressEntity> customerAddressEntity = customerAddressDao.getAddressByCustomer(customerEntity);
+        List<AddressEntity> addressEntityList = new ArrayList<>();
+        for (CustomerAddressEntity cae : customerAddressEntity) {
+            AddressEntity addressEntity = cae.getAddress();
+            addressEntityList.add(addressEntity);
         }
+        //addressEntityList
 
-        List<CustomerAddressEntity> customerAddressEntity = customerAddressDao.getAddressByCustomer(customerAuth.getCustomer());
-
-
-        return customerAddressEntity;
+        return addressEntityList;
 
     }
 

@@ -1,6 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,6 +23,13 @@ public class StateEntity {
     @Column(name = "state_name")
     @Size(max = 30)
     private String state_name;
+
+    public StateEntity() {}
+
+    public StateEntity(@NotNull @Size(max = 200) String uuid, @Size(max = 30) String stateName) {
+        this.uuid = uuid;
+        this.state_name = stateName;
+    }
 
     public Integer getId() {
         return id;

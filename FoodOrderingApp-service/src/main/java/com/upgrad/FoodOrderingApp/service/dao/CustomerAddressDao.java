@@ -20,7 +20,8 @@ public class CustomerAddressDao {
 
     public List<CustomerAddressEntity> getAddressByCustomer(final CustomerEntity customerEntity){
         try {
-return (List<CustomerAddressEntity>) entityManager.createNamedQuery("getCustomerAddress", CustomerAddressEntity.class).setParameter("customer", customerEntity).getSingleResult();
+            return  entityManager.createNamedQuery("getCustomerAddress", CustomerAddressEntity.class)
+                    .setParameter("customer", customerEntity).getResultList();
         }
         catch (NoResultException nre){
             return null;
